@@ -20,6 +20,10 @@ int main()
 	ProductManager pm;
 	ShoppingManager sm;
 
+
+	cm.Client_Load();
+	pm.Product_Load();
+	sm.Shopping_Load();
 	cout << "안녕하십니까? Dentist Center 입니다." << endl;
 	while (true)
 	{
@@ -33,7 +37,7 @@ int main()
 		//고객 정보 스위치
 		case 1:
 			cout << "\n1.고객 정보 관리" << endl;
-			cout << "1.입력, 2.조회, 3.삭제, 4.모두삭제, 5.변경, 6.파일저장, 7.불러오기" << endl;
+			cout << "1.입력, 2.조회, 3.삭제, 4.모두삭제, 5.변경, 6.파일저장" << endl;
 			cout << "해당하는 번호를 입력해주세요 : "; cin >> S_number;
 			switch (S_number)
 			{
@@ -68,9 +72,6 @@ int main()
 				break;
 			case 6:
 				cm.Client_Save();
-				break;
-			case 7:
-				cm.Client_Load();
 				break;
 			default:
 				cout << "입력하신 고객 정보 관리 번호가 없습니다." << endl;
@@ -112,7 +113,7 @@ int main()
 				pm.Product_Change(p_id);
 				break;
 			case 6:
-				//잠시 보류
+				pm.Product_Save();
 				break;
 			default:
 				cout << "입력하신 상품 정보 관리 번호가 없습니다." << endl;
@@ -123,6 +124,7 @@ int main()
 
 		//구매 정보 스위치
 		case 3:
+			sm.sort();
 			cout << "\n3.구매 정보 관리" << endl;
 			cout << "1.주문, 2.조회, 3.삭제, 4.전체삭제, 5.변경, 6.파일저장" << endl;
 			cout << "번호를 입력해주세요 : "; cin >> S_number;
@@ -133,7 +135,7 @@ int main()
 				pm.Product_Display();
 				cout << "위의 리스트를 보고 해당하는 상품과 고객정보를 입력하세요." << endl;
 				cout << "고객의 등록 ID : "; cin >> pk_cl;
-				cout << "상품의 등록 ID: ";  cin >> pk_pr;
+				cout << "상품의 등록 ID : "; cin >> pk_pr;
 				cout << "구매날짜(예 : 220830, 210578, YYMMDD) : "; cin >> s_date;
 				cout << "구매수량 : "; cin >> s_quan; cout << endl;
 				sm.Shopping_Input(cm, pm, sm.getSNumber(), pk_cl,
@@ -157,7 +159,7 @@ int main()
 				sm.Shopping_Change(s_num);
 				break;
 			case 6:
-				//잠시 보류
+				sm.Shopping_Save();
 				break;
 			default:
 				cout << "입력하신 구매 정보 관리 번호가 없습니다." << endl;
@@ -167,6 +169,17 @@ int main()
 
 		//프로그램 종료 스위치	
 		case 4:
+			char push;
+			cout << "\n저장후 프로그램을 종료하시겠습니까? (y/n) : "; cin >> push;
+			if (push == 'y' || push == 'Y')
+			{
+				cm.Client_Save();
+				pm.Product_Save();
+				sm.Shopping_Save();
+				cout << "프로그램 종료!!" << endl << endl;
+				exit(1);
+				break;
+			}
 			cout << "프로그램 종료!!" << endl << endl;
 			exit(1);
 			break;

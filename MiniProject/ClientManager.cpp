@@ -11,6 +11,7 @@ void ClientManager::Client_Input(string _word,
 
 void ClientManager::Client_Display()
 {
+	cout << "ClientCount : " << C_Count << endl;
 	cout << "+++++++++++++++++++++고객 정보 리스트+++++++++++++++++++++" << endl;
 	for_each(clientList.begin(), clientList.end(), [](Client* c)
 		{
@@ -22,7 +23,7 @@ void ClientManager::Client_Display()
 
 void ClientManager::Client_Remove(string _word, string _name)
 {
-	for (int i = 0; i < ClientManager::C_Count; i++)
+	for (int i = 0; i < C_Count; i++)
 	{
 		if ((clientList.at(i)->getCWord().compare(_word) == 0) &&
 			(clientList.at(i)->getCName().compare(_name) == 0))
@@ -85,12 +86,13 @@ void ClientManager::Client_Save()
 			file << c->getCWord() << ',';
 			file << c->getCName() << ',';
 			file << c->getCPhone() << ',';
-			file << c->getCEmail() << endl;
+			file << c->getCEmail() << ',';
+			file << C_Count << endl;
 		}
 		file << endl;
 	}
 	file.close();
-	cout << "파일 저장 완료" << endl << endl;
+	cout << "Client 파일 저장 완료" << endl;
 }
 
 void ClientManager::Client_Load()
@@ -102,14 +104,16 @@ void ClientManager::Client_Load()
 		while (!file.eof()) {
 			vector<string> row = parseCSV(file, ',');
 			if (row.size()) {
+				int count = atoi(row[4].c_str());
 				Client* c = new Client(row[0], row[1],
 					row[2], row[3]);
 				clientList.push_back(c);
+				C_Count = count;
 			}
 		}
 	}
 	file.close();
-	cout << "파일 불러오기 완료" << endl << endl;
+	cout << "Client 파일 불러오기 완료" << endl;
 }
 
 vector<string> ClientManager::parseCSV(istream& file,

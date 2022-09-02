@@ -9,6 +9,7 @@ void ProductManager::Product_Input(string _id, string _name, int _price)
 }
 void ProductManager::Product_Display()
 {
+	cout << "ProductCount : " << P_Count << endl;
 	cout << "+++++++++++++++++++++상품 정보 리스트+++++++++++++++++++++" << endl;
 	for_each(productList.begin(), productList.end(),
 		[](Product* p) {
@@ -64,4 +65,73 @@ void ProductManager::Product_PK(string _id)
 		Product* p = *it;
 		cout << "Product Prime Key : " << p->getPId() << endl;
 	}
+}
+
+void ProductManager::Product_Save()
+{
+	ofstream file;
+	file.open("prductlist.txt");
+	if (!file.fail())
+	{
+		for (const auto& p : productList)
+		{
+			file << p->getPId() << ',';
+			file << p->getPName() << ',';
+			file << p->getPPrice() << ',';
+			file << P_Count << endl;
+		}
+		file << endl;
+	}
+	file.close();
+	cout << "Product 파일 저장 완료" << endl;
+}
+
+void ProductManager::Product_Load()
+{
+	ifstream file;
+	file.open("prductlist.txt");
+	if (!file.fail())
+	{
+		while (!file.eof())
+		{
+			vector<string> row = parseCSV(file, ',');
+			if (row.size())
+			{
+				int count = atoi(row[3].c_str());
+				int price = atoi(row[2].c_str());
+				Product* p = new Product(row[0], row[1], price);
+				productList.push_back(p);
+				P_Count = count;
+			}
+		}
+	}
+	file.close();
+	cout << "Product 파일 불러오기 완료" << endl;
+}
+
+vector<string> ProductManager::parseCSV(istream& file, char delimiter)
+{
+	stringstream ss;
+	vector<string> row;
+	string t = " \n\r\t";
+
+	while (!file.eof())
+	{
+		char c = file.get();
+		if (c == delimiter || c == '\r' || c == '\n')
+		{
+			if (file.peek() == '\n') file.get();
+			string s = ss.str();
+			s.erase(0, s.find_first_not_of(t));
+			s.erase(s.find_last_not_of(t) + 1);
+			row.push_back(s);
+			ss.str("");
+			if (c != delimiter) break;
+		}
+		else
+		{
+			ss << c;
+		}
+	}
+	return row;
 }
