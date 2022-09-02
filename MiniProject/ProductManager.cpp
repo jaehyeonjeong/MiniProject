@@ -13,8 +13,8 @@ void ProductManager::Product_Display()
 	cout << "+++++++++++++++++++++상품 정보 리스트+++++++++++++++++++++" << endl;
 	for_each(productList.begin(), productList.end(),
 		[](Product* p) {
-			cout << p->getPId() << " : " << p->getPName() << ", " 
-				<< p->getPPrice() << endl;
+			cout << setw(11) << p->getPId() << " : " << setw(11) << p->getPName() << ", " 
+				<< setw(12) << p->getPPrice() << endl;
 		});
 	cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl << endl;
 }

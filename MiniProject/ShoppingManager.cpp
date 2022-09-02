@@ -51,14 +51,14 @@ void ShoppingManager::sort()
 void ShoppingManager::Shopping_Display()
 {
 	cout << "ShoppingCount : " << S_Count << endl;
-	cout << "+++++++++++++++++++++구매 정보 리스트+++++++++++++++++++++" << endl;
+	cout << "++++++++++++++++++++++구매 정보 리스트++++++++++++++++++++++" << endl;
 	for_each(shoppingList.begin(), shoppingList.end(), [](Shopping* s)
 		{
-			cout << s->getSNumber() << " : " << s->getSPKClient() << ", "
-				<< s->getSPKProduct() << ", " << s->getSDate() <<
-				", " << s->getSQuan() << ", " << s->getSAllprice() << endl;
+			cout << setw(2) << s->getSNumber() << " : " << setw(10) << s->getSPKClient() << ", "
+				<< setw(11) << s->getSPKProduct() << ", " << setw(11) << s->getSDate() <<
+				", " << setw(5) << s->getSQuan() << ", " << setw(10) << s->getSAllprice() << endl;
 		});
-	cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl << endl;
+	cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl << endl;
 }
 
 void ShoppingManager::Shopping_Remove(int _num)
