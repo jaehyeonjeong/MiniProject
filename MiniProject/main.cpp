@@ -37,7 +37,7 @@ int main()
 		//고객 정보 스위치
 		case 1:
 			cout << "\n1.고객 정보 관리" << endl;
-			cout << "1.입력, 2.조회, 3.삭제, 4.모두삭제, 5.변경, 6.파일저장" << endl;
+			cout << "1.입력, 2.조회, 3.삭제, 4.모두삭제, 5.변경" << endl;
 			cout << "해당하는 번호를 입력해주세요 : "; cin >> S_number;
 			switch (S_number)
 			{
@@ -70,9 +70,6 @@ int main()
 				cout << "변경될 고객 성함을 입력 : "; cin >> c_name;
 				cm.Client_Change(c_word, c_name); cout << endl;
 				break;
-			case 6:
-				cm.Client_Save();
-				break;
 			default:
 				cout << "입력하신 고객 정보 관리 번호가 없습니다." << endl;
 				break;
@@ -82,7 +79,7 @@ int main()
 		//상품 정보 스위치
 		case 2:
 			cout << "\n2.상품 정보 관리" << endl;
-			cout << "1.입력, 2.조회, 3.삭제, 4.모두삭제, 5.변경, 6.파일저장" << endl;
+			cout << "1.입력, 2.조회, 3.삭제, 4.모두삭제, 5.변경" << endl;
 			cout << "해당하는 번호를 입력해주세요 : "; cin >> S_number;
 			switch (S_number)
 			{
@@ -112,9 +109,6 @@ int main()
 				cout << "변경될 상품 ID를 입력 : "; cin >> p_id;
 				pm.Product_Change(p_id);
 				break;
-			case 6:
-				pm.Product_Save();
-				break;
 			default:
 				cout << "입력하신 상품 정보 관리 번호가 없습니다." << endl;
 				break;
@@ -126,7 +120,7 @@ int main()
 		case 3:
 			sm.sort();
 			cout << "\n3.구매 정보 관리" << endl;
-			cout << "1.주문, 2.조회, 3.삭제, 4.전체삭제, 5.변경, 6.파일저장" << endl;
+			cout << "1.주문, 2.조회, 3.삭제, 4.전체삭제, 5.변경" << endl;
 			cout << "번호를 입력해주세요 : "; cin >> S_number;
 			switch (S_number)
 			{
@@ -157,9 +151,6 @@ int main()
 				sm.Shopping_Display();
 				cout << "\n변경할 구매 번호를 입력해주세요 : "; cin >> s_num;
 				sm.Shopping_Change(s_num);
-				break;
-			case 6:
-				sm.Shopping_Save();
 				break;
 			default:
 				cout << "입력하신 구매 정보 관리 번호가 없습니다." << endl;

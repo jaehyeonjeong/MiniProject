@@ -26,8 +26,9 @@ void ShoppingManager::Shopping_Input(ClientManager& C_ref, ProductManager& P_ref
 						{
 							Product* p = *it2;
 							cout << "ADD Prodcut Prime Key : " << p->getPId() << endl;
+							int price = P_ref.productList.at(j)->getPPrice() * _quantatiy;
 							shoppingList.push_back(new Shopping(_num,
-								_clpk, _prpk, _date, _quantatiy));
+								_clpk, _prpk, _date, _quantatiy, price));
 							Snumber += 1;
 							S_Count += 1;
 							cout << "\n구매 정보 추가 완료" << endl;
@@ -55,7 +56,7 @@ void ShoppingManager::Shopping_Display()
 		{
 			cout << s->getSNumber() << " : " << s->getSPKClient() << ", "
 				<< s->getSPKProduct() << ", " << s->getSDate() <<
-				", " << s->getSQuan() << endl;
+				", " << s->getSQuan() << ", " << s->getSAllprice() << endl;
 		});
 	cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl << endl;
 }
@@ -113,6 +114,7 @@ void ShoppingManager::Shopping_Save()
 			file << s->getSPKProduct() << ',';
 			file << s->getSDate() << ',';
 			file << s->getSQuan() << ',';
+			file << s->getSAllprice() << ',';
 			file << S_Count << endl;
 		}
 		file << endl;
@@ -135,8 +137,10 @@ void ShoppingManager::Shopping_Load()
 				int snum = atoi(row[0].c_str());
 				int date = atoi(row[3].c_str());
 				int quan = atoi(row[4].c_str());
-				int count = atoi(row[5].c_str());
-				Shopping* s = new Shopping(snum, row[1], row[2], date, quan);
+				int price = atoi(row[5].c_str());
+				int count = atoi(row[6].c_str());
+				Shopping* s = new Shopping(snum, row[1],
+					row[2], date, quan, price);
 				shoppingList.push_back(s);
 				S_Count = count;
 				Snumber = count;

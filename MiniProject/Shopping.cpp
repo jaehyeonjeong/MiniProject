@@ -49,3 +49,8 @@ void Shopping::setSQuan(int _quan)
 {
 	S_Quan = _quan;
 }
+
+int Shopping::getSAllprice()
+{
+	return S_Allprice;
+}

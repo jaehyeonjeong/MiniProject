@@ -15,7 +15,7 @@ void ClientManager::Client_Display()
 	cout << "+++++++++++++++++++++°í°´ Á¤º¸ ¸®½ºÆ®+++++++++++++++++++++" << endl;
 	for_each(clientList.begin(), clientList.end(), [](Client* c)
 		{
-			cout << c->getCWord() << " : " << c->getCName() << ", "
+			cout << "°í°´ ID : " << c->getCWord() << " : " << c->getCName() << ", "
 				<< c->getCPhone() << ", " << c->getCEmail() << endl;
 		});
 	cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl << endl;
