@@ -5,6 +5,9 @@
 #include <vector>
 #include <algorithm>
 #include <cstring>
+#include <fstream>
+#include <sstream>
+#include <iomanip>
 
 class ClientManager
 {
@@ -17,6 +20,9 @@ public:
 	void Client_Change(string _word, string _name);
 	void Client_PK(string _word);
 	int getCCount() { return C_Count; };
+	void Client_Save();
+	void Client_Load();
+	vector<string> parseCSV(istream& file, char delimiter);
 	vector<Client*> clientList;
 private:
 	int C_Count = 0;

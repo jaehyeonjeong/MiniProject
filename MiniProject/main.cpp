@@ -33,7 +33,7 @@ int main()
 		//고객 정보 스위치
 		case 1:
 			cout << "\n1.고객 정보 관리" << endl;
-			cout << "1.입력, 2.조회, 3.삭제, 4.모두삭제, 5.변경, 6.파일저장" << endl;
+			cout << "1.입력, 2.조회, 3.삭제, 4.모두삭제, 5.변경, 6.파일저장, 7.불러오기" << endl;
 			cout << "해당하는 번호를 입력해주세요 : "; cin >> S_number;
 			switch (S_number)
 			{
@@ -67,7 +67,10 @@ int main()
 				cm.Client_Change(c_word, c_name); cout << endl;
 				break;
 			case 6:
-				//잠시 보류
+				cm.Client_Save();
+				break;
+			case 7:
+				cm.Client_Load();
 				break;
 			default:
 				cout << "입력하신 고객 정보 관리 번호가 없습니다." << endl;

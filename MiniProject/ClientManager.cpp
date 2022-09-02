@@ -75,3 +75,64 @@ void ClientManager::Client_PK(string _word)
 		cout << "Client Prime Key : " << c->getCWord() << endl;
 	}
 }
+
+void ClientManager::Client_Save()
+{
+	ofstream file;
+	file.open("clientlist.txt");
+	if (!file.fail()) {
+		for (const auto& c : clientList) {
+			file << c->getCWord() << ',';
+			file << c->getCName() << ',';
+			file << c->getCPhone() << ',';
+			file << c->getCEmail() << endl;
+		}
+		file << endl;
+	}
+	file.close();
+	cout << "파일 저장 완료" << endl << endl;
+}
+
+void ClientManager::Client_Load()
+{
+	//vector<Client*> vecList;
+	ifstream file; //input
+	file.open("clientlist.txt");
+	if (!file.fail()) {
+		while (!file.eof()) {
+			vector<string> row = parseCSV(file, ',');
+			if (row.size()) {
+				Client* c = new Client(row[0], row[1],
+					row[2], row[3]);
+				clientList.push_back(c);
+			}
+		}
+	}
+	file.close();
+	cout << "파일 불러오기 완료" << endl << endl;
+}
+
+vector<string> ClientManager::parseCSV(istream& file,
+	char delimiter)
+{
+	stringstream ss;
+	vector<string> row;
+	string t = " \n\r\t";
+
+	while (!file.eof()) {
+		char c = file.get();
+		if (c == delimiter || c == '\r' || c == '\n') {
+			if (file.peek() == '\n') file.get();
+			string s = ss.str();
+			s.erase(0, s.find_first_not_of(t));
+			s.erase(s.find_last_not_of(t) + 1);
+			row.push_back(s);
+			ss.str("");
+			if (c != delimiter) break;
+		}
+		else {
+			ss << c;
+		}
+	}
+	return row;
+}
