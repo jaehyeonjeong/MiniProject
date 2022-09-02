@@ -143,13 +143,17 @@
     <ClInclude Include="ClientManager.h" />
     <ClInclude Include="Product.h" />
     <ClInclude Include="Shopping.h" />
+    <ClInclude Include="ProductManager.h" />
+    <ClInclude Include="ShoppingManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="ClientManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Product.cpp" />
+    <ClCompile Include="ProductManager.cpp" />
     <ClCompile Include="Shopping.cpp" />
+    <ClCompile Include="ShoppingManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

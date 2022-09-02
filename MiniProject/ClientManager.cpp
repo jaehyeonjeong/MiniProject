@@ -41,7 +41,7 @@ void ClientManager::Client_Remove_All()
 		clientList.erase(clientList.begin(), clientList.end());
 	}
 	ClientManager::C_Count = 0;
-	cout << "\n 고객 정보 전체 삭제 완료" << endl;
+	cout << "\n고객 정보 전체 삭제 완료" << endl;
 }
 
 void ClientManager::Client_Change(string _word, string _name)
@@ -51,7 +51,7 @@ void ClientManager::Client_Change(string _word, string _name)
 		if ((clientList.at(i)->getCWord().compare(_word) == 0) &&
 			(clientList.at(i)->getCName().compare(_name) == 0))
 		{
-			cout << "변경할 고객 ID : "; cin >> ClientManager::CM_Word;
+			cout << "\n변경할 고객 ID : "; cin >> ClientManager::CM_Word;
 			clientList.at(i)->setCWord(ClientManager::CM_Word);
 			cout << "변경할 고객 성함 : "; cin >> ClientManager::CM_Name;
 			clientList.at(i)->setCName(ClientManager::CM_Name);
@@ -59,6 +59,7 @@ void ClientManager::Client_Change(string _word, string _name)
 			clientList.at(i)->setCPhone(ClientManager::CM_Phone);
 			cout << "변경할 고객 이메일 : "; cin >> ClientManager::CM_Email;
 			clientList.at(i)->setCEmail(ClientManager::CM_Email);
+			cout << "고객 정보 변경 완료!!" << endl;
 		}
 	}
 }

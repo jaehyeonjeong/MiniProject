@@ -29,3 +29,8 @@ void Product::setPPrice(int _price)
 {
 	P_Price = _price;
 }
+
+bool Product::operator==(string str) const
+{
+	return (this->P_Id == str);
+}

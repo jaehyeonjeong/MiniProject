@@ -7,7 +7,11 @@ using namespace std;
 class Shopping
 {
 public:
-	Shopping(int = 0, string = "", string = "", int = 0, int = 0);
+	Shopping(int _snum = 0, string _cpk = "", string _ppk = "", int _date = 0, int _quan = 0)
+		:S_Number(_snum), PK_Client(_cpk), PK_Product(_ppk), S_Date(_date), S_Quan(_quan)
+	{
+
+	}
 	int getSNumber();
 	void setSNumber(int _number);
 	string getSPKClient();
