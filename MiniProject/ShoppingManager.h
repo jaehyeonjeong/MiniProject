@@ -21,9 +21,11 @@ public:
 	void sort();
 	void Shopping_Remove(int _num);
 	void Shopping_Remove_All();
-	void Shopping_Change(int _num);
+	void Shopping_Change(int _num, ProductManager& sh_pm);
 	void Shopping_Save();
 	void Shopping_Load();
+	void setAllPrice(int _price);
+	int getAllPrice() { return Allprice; }
 	vector<string> parseCSV(istream& file, char delimiter);
 	vector<Shopping*> shoppingList;
 private:
@@ -33,6 +35,7 @@ private:
 	string PR_PK;
 	int date;
 	int quan;
+	int Allprice;
 };
 
 #endif

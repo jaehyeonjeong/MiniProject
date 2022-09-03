@@ -90,9 +90,9 @@ void ShoppingManager::Shopping_Remove_All()
 	cout << "\n구매 정보 전체 삭제 완료!" << endl;
 }
 
-
-void ShoppingManager::Shopping_Change(int _num)
+void ShoppingManager::Shopping_Change(int _num, ProductManager& sh_pm)
 {
+	
 	for (int i = 0; i < S_Count; i++)
 	{
 		if (shoppingList.at(i)->getSNumber() == _num)
@@ -102,6 +102,16 @@ void ShoppingManager::Shopping_Change(int _num)
 			cout << "변경할 수량 : "; cin >> quan;
 			shoppingList.at(i)->setSQuan(quan);
 			cout << "고객 정보 변경 완료!!" << endl;
+
+			for (int j = 0; j < sh_pm.getPCount(); j++)
+			{
+				if (sh_pm.productList.at(j)->getPId().compare(shoppingList.at(i)->getSPKProduct()) == 0)
+				{
+					int price = sh_pm.productList.at(j)->getPPrice() * quan;
+					shoppingList.at(i)->setSAllprice(price);
+					cout << "가격 변경 완료" << endl;
+				}
+			}
 		}
 	}
 }
@@ -181,4 +191,9 @@ vector<string> ShoppingManager::parseCSV(istream& file, char delimiter)
 		}
 	}
 	return row;
+}
+
+void ShoppingManager::setAllPrice(int _price)
+{
+	Allprice = _price;
 }

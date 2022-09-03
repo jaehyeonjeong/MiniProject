@@ -23,6 +23,7 @@ public:
 	int getSQuan();
 	void setSQuan(int _quan);
 	int getSAllprice();
+	void setSAllprice(int _allprice) { S_Allprice = _allprice; }
 private:
 	int S_Number;
 	string PK_Client;
