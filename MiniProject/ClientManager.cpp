@@ -12,13 +12,17 @@ void ClientManager::Client_Input(string _word,
 void ClientManager::Client_Display()
 {
 	cout << "ClientCount : " << C_Count << endl;
-	cout << "+++++++++++++++++++++°í°´ Á¤º¸ ¸®½ºÆ®+++++++++++++++++++++++++" << endl;
+	cout << "++++++++++++++++++++++°í°´ Á¤º¸ ¸®½ºÆ®++++++++++++++++++++++++++" << endl;
+	cout << "----------------------------------------------------------------" << endl;
+	cout << setw(11) << "°í°´ID" << " | " << setw(10) << "°í°´ ¼ºÇÔ" << " | " << setw(15) << "°í°´ ÀüÈ­¹øÈ£" << " | " << setw(20) << "°í°´ ÀÌ¸ÞÀÏ" << endl;
+	cout << "----------------------------------------------------------------" << endl;
 	for_each(clientList.begin(), clientList.end(), [](Client* c)
 		{
-			cout << setw(11) << c->getCWord() << " : " << setw(8) << c->getCName() << ", "
-				<< setw(15) << c->getCPhone() << ", " << setw(20) << c->getCEmail() << endl;
+			cout << setw(11) << c->getCWord() << " | " << setw(10) << c->getCName() << " | "
+				<< setw(15) << c->getCPhone() << " | " << setw(20) << c->getCEmail() << endl;
+			cout << "----------------------------------------------------------------" << endl;
 		});
-	cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl << endl;
+	cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl << endl;
 }
 
 void ClientManager::Client_Remove(string _word, string _name)

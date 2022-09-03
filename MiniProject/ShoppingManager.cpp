@@ -51,14 +51,19 @@ void ShoppingManager::sort()
 void ShoppingManager::Shopping_Display()
 {
 	cout << "ShoppingCount : " << S_Count << endl;
-	cout << "++++++++++++++++++++++구매 정보 리스트++++++++++++++++++++++" << endl;
+	cout << "++++++++++++++++++++++++++구매 정보 리스트++++++++++++++++++++++++++" << endl;
+	cout << "--------------------------------------------------------------------" << endl;
+	cout << setw(5) << "번호" << " | " << setw(10) << "고객 ID" << " | " << setw(11) << "상품 ID" << " | " << setw(11) << "구매 날짜" << " | "
+		<< setw(5) << "수량" << " | " << setw(10) << "총 금액" << endl;
+	cout << "--------------------------------------------------------------------" << endl;
 	for_each(shoppingList.begin(), shoppingList.end(), [](Shopping* s)
 		{
-			cout << setw(2) << s->getSNumber() << " : " << setw(10) << s->getSPKClient() << ", "
-				<< setw(11) << s->getSPKProduct() << ", " << setw(11) << s->getSDate() <<
-				", " << setw(5) << s->getSQuan() << ", " << setw(10) << s->getSAllprice() << endl;
+			cout << setw(5) << s->getSNumber() << " | " << setw(10) << s->getSPKClient() << " | "
+				<< setw(11) << s->getSPKProduct() << " | " << setw(11) << s->getSDate() <<
+				" | " << setw(5) << s->getSQuan() << " | " << setw(8) << s->getSAllprice() << "원" << endl;
+			cout << "--------------------------------------------------------------------" << endl;
 		});
-	cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl << endl;
+	cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl << endl;
 }
 
 void ShoppingManager::Shopping_Remove(int _num)
