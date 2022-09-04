@@ -6,7 +6,7 @@ void ShoppingManager::Shopping_Input(ClientManager& C_ref, ProductManager& P_ref
 {
 	for (int i = 0; i < C_ref.getCCount(); i++)
 	{
-		if (C_ref.clientList.at(i)->getCWord().compare(_clpk) == 0)
+		if (C_ref.clientList.at(i)->getCWord().compare(_clpk) == 0) //클라이언트 PK와 입력한 클라이언트 PK값 비교 참이면 바디 계산
 		{
 			string C_Word = C_ref.clientList.at(i)->getCWord();
 			auto it1 = find_if(C_ref.clientList.begin(), C_ref.clientList.end(),
@@ -17,7 +17,7 @@ void ShoppingManager::Shopping_Input(ClientManager& C_ref, ProductManager& P_ref
 				cout << "ADD Client Prime Key : " << c->getCWord() << endl;
 				for (int j = 0; j < P_ref.getPCount(); j++)
 				{
-					if (P_ref.productList.at(j)->getPId().compare(_prpk) == 0)
+					if (P_ref.productList.at(j)->getPId().compare(_prpk) == 0) //프로덕트 PK와 입력한 프로덕트 PK값 비교 참이면 바디 계산
 					{
 						string P_Id = P_ref.productList.at(j)->getPId();
 						auto it2 = find_if(P_ref.productList.begin(),
@@ -29,7 +29,7 @@ void ShoppingManager::Shopping_Input(ClientManager& C_ref, ProductManager& P_ref
 							cout << "ADD Prodcut Prime Key : " << p->getPId() << endl;
 							int price = P_ref.productList.at(j)->getPPrice() * _quantatiy;
 							shoppingList.push_back(new Shopping(_num,
-								_clpk, _prpk, _date, _quantatiy, price));
+								_clpk, _prpk, _date, _quantatiy, price)); // 위의 PK값 일치가 충족 된다면 쇼핑 리스트에 데이터 추가
 							Snumber += 1;
 							S_Count += 1;
 							cout << "\n구매 정보 추가 완료" << endl;
@@ -91,7 +91,7 @@ void ShoppingManager::Shopping_Remove_All()
 		shoppingList.erase(shoppingList.begin(), shoppingList.end());
 	}
 	S_Count = 0;
-	Snumber = 0;
+	Snumber = 0; //Shoppinglist count 초기화
 	cout << "\n구매 정보 전체 삭제 완료!" << endl;
 }
 
