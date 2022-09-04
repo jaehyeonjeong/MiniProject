@@ -1,5 +1,6 @@
 #include "ShoppingManager.h"
 
+//구매 정보 데이터 추가 함수
 void ShoppingManager::Shopping_Input(ClientManager& C_ref, ProductManager& P_ref,
 	int _num, string _clpk, string _prpk, int _date, int _quantatiy)
 {
@@ -40,6 +41,7 @@ void ShoppingManager::Shopping_Input(ClientManager& C_ref, ProductManager& P_ref
 	}
 }
 
+//구매 정보 리스트 순서 정리 함수
 void ShoppingManager::sort()
 {
 	for (int i = 0; i < S_Count; i++)
@@ -48,6 +50,7 @@ void ShoppingManager::sort()
 	}
 }
 
+//구매 정보 리스트 공개 함수
 void ShoppingManager::Shopping_Display()
 {
 	cout << "ShoppingCount : " << S_Count << endl;
@@ -66,6 +69,7 @@ void ShoppingManager::Shopping_Display()
 	cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl << endl;
 }
 
+//구매 정보 삭제 함수
 void ShoppingManager::Shopping_Remove(int _num)
 {
 	for (int i = 0; i < S_Count; i++)
@@ -79,6 +83,7 @@ void ShoppingManager::Shopping_Remove(int _num)
 	}
 }
 
+//구매 정보 전체 삭제 함수
 void ShoppingManager::Shopping_Remove_All()
 {
 	while (!shoppingList.empty())
@@ -90,6 +95,7 @@ void ShoppingManager::Shopping_Remove_All()
 	cout << "\n구매 정보 전체 삭제 완료!" << endl;
 }
 
+//구매 정보 변경 함수
 void ShoppingManager::Shopping_Change(int _num, ProductManager& sh_pm)
 {
 	
@@ -97,9 +103,25 @@ void ShoppingManager::Shopping_Change(int _num, ProductManager& sh_pm)
 	{
 		if (shoppingList.at(i)->getSNumber() == _num)
 		{
+		shopping_date:;
 			cout << "\n변경할 날짜 : "; cin >> date;
+			if (!cin)//정수형 인자 콘솔 입력부분 경계 검사
+			{
+				cout << "\n등록 가격에 정수형 숫자를 입력하지 않았습니다." << endl;
+				cin.clear();
+				cin.ignore(INT_MAX, '\n');
+				goto shopping_date;
+			}
 			shoppingList.at(i)->setSDate(date);
+		shopping_quan:;
 			cout << "변경할 수량 : "; cin >> quan;
+			if (!cin)//정수형 인자 콘솔 입력부분 경계 검사
+			{
+				cout << "\n등록 가격에 정수형 숫자를 입력하지 않았습니다." << endl;
+				cin.clear();
+				cin.ignore(INT_MAX, '\n');
+				goto shopping_quan;
+			}
 			shoppingList.at(i)->setSQuan(quan);
 			cout << "고객 정보 변경 완료!!" << endl;
 
@@ -116,6 +138,7 @@ void ShoppingManager::Shopping_Change(int _num, ProductManager& sh_pm)
 	}
 }
 
+//구매 정보 저장 함수
 void ShoppingManager::Shopping_Save()
 {
 	ofstream file;
@@ -138,6 +161,7 @@ void ShoppingManager::Shopping_Save()
 	cout << "Shopping 파일 저장 완료" << endl;
 }
 
+//구매 정보 불러오기 함수
 void ShoppingManager::Shopping_Load()
 {
 	ifstream file;

@@ -20,7 +20,7 @@ int main()
 	ProductManager pm;
 	ShoppingManager sm;
 
-
+	//Client Product Shopping 텍스트 불러오기
 	cm.Client_Load();
 	pm.Product_Load();
 	sm.Shopping_Load();
@@ -31,7 +31,7 @@ int main()
 		cout << "1. 고객 정보 관리, 2. 상품 정보 관리, 3.구매 정보 관리, 4.종료" << endl;
 		cout << "번호를 입력하여 주세요 : "; cin >> L_number;
 
-		if (!cin)
+		if (!cin) //정수형 인자 콘솔 입력부분 경계 검사
 		{
 			cout << "\n1 ~ 4번 까지 정수형 숫자만 입력가능 합니다." << endl;
 			cin.clear();
@@ -48,7 +48,7 @@ int main()
 			cout << "1.입력, 2.조회, 3.삭제, 4.모두삭제, 5.변경" << endl;
 			cout << "해당하는 번호를 입력해주세요 : "; cin >> S_number;
 
-			if (!cin)
+			if (!cin) //정수형 인자 콘솔 입력부분 경계 검사
 			{
 				cout << "\n고객 정보 관리에 정수형 숫자를 입력하지 않았습니다." << endl;
 				cin.clear();
@@ -100,7 +100,7 @@ int main()
 			cout << "1.입력, 2.조회, 3.삭제, 4.모두삭제, 5.변경" << endl;
 			cout << "해당하는 번호를 입력해주세요 : "; cin >> S_number;
 
-			if (!cin)
+			if (!cin)//정수형 인자 콘솔 입력부분 경계 검사
 			{
 				cout << "\n상품 정보 관리에 정수형 숫자를 입력하지 않았습니다." << endl;
 				cin.clear();
@@ -117,7 +117,7 @@ int main()
 				cout << "상품 등록 이름 : "; cin >> p_name;
 			product_1:;
 				cout << "상품 등록 가격 : "; cin >> p_price;
-				if (!cin)
+				if (!cin)//정수형 인자 콘솔 입력부분 경계 검사
 				{
 					cout << "\n등록 가격에 정수형 숫자를 입력하지 않았습니다." << endl;
 					cin.clear();
@@ -159,7 +159,7 @@ int main()
 			cout << "\n3.구매 정보 관리" << endl;
 			cout << "1.주문, 2.조회, 3.삭제, 4.전체삭제, 5.변경" << endl;
 			cout << "번호를 입력해주세요 : "; cin >> S_number;
-			if (!cin)
+			if (!cin)//정수형 인자 콘솔 입력부분 경계 검사
 			{
 				cout << "\n구매 정보 관리에 정수형 숫자를 입력하지 않았습니다." << endl;
 				cin.clear();
@@ -202,7 +202,7 @@ int main()
 				sm.Shopping_Display();
 			shopping_3:;
 				cout << "\n삭제할 구매 번호를 입력해주세요 : "; cin >> s_num;
-				if (!cin)
+				if (!cin)//정수형 인자 콘솔 입력부분 경계 검사
 				{
 					cout << "\n번호에 정수형 숫자를 입력하지 않았습니다." << endl;
 					cin.clear();
@@ -219,7 +219,7 @@ int main()
 			shopping_4:;
 				sm.Shopping_Display();
 				cout << "\n변경할 구매 번호를 입력해주세요 : "; cin >> s_num;
-				if (!cin)
+				if (!cin)//정수형 인자 콘솔 입력부분 경계 검사
 				{
 					cout << "\n번호에 정수형 숫자를 입력하지 않았습니다." << endl;
 					cin.clear();

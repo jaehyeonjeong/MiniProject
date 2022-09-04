@@ -1,5 +1,6 @@
 #include "ProductManager.h"
 
+//상품 데이터 입력 함수
 void ProductManager::Product_Input(string _id, string _name, int _price)
 {
 	productList.push_back(new Product(_id, _name, _price));
@@ -7,6 +8,8 @@ void ProductManager::Product_Input(string _id, string _name, int _price)
 	Product_PK(_id);
 	cout << "\n상품 정보 등록 완료!" << endl << endl;
 }
+
+//상품 리스트 공개 함수
 void ProductManager::Product_Display()
 {
 	cout << "ProductCount : " << P_Count << endl;
@@ -22,6 +25,8 @@ void ProductManager::Product_Display()
 		});
 	cout << "+++++++++++++++++++++++++++++++++++++++++" << endl << endl;
 }
+
+//상품 정보 삭제 함수
 void ProductManager::Product_Remove(string _id)
 {
 	for (int i = 0; i < P_Count; i++)
@@ -34,6 +39,8 @@ void ProductManager::Product_Remove(string _id)
 		}
 	}
 }
+
+//상품 정보 전체 제거 함수
 void ProductManager::Product_Remove_All()
 {
 	while (!productList.empty())
@@ -43,6 +50,8 @@ void ProductManager::Product_Remove_All()
 	P_Count = 0;
 	cout << "\n상품 정보 전체 삭제 완료!" << endl;
 }
+
+//상품 정보 변경 함수
 void ProductManager::Product_Change(string _id)
 {
 	for (int i = 0; i < P_Count; i++)
@@ -53,7 +62,15 @@ void ProductManager::Product_Change(string _id)
 			productList.at(i)->setPId(ProductManager::PM_ID);
 			cout << "변경할 상품 이름 : "; cin >> ProductManager::PM_Name;
 			productList.at(i)->setPName(ProductManager::PM_Name);
+		product_price:;
 			cout << "변경할 상품 가격 : "; cin >> ProductManager::PM_Price;
+			if (!cin)//정수형 인자 콘솔 입력부분 경계 검사
+			{
+				cout << "\n등록 가격에 정수형 숫자를 입력하지 않았습니다." << endl;
+				cin.clear();
+				cin.ignore(INT_MAX, '\n');
+				goto product_price;
+			}
 			productList.at(i)->setPPrice(ProductManager::PM_Price);
 			cout << "상품 정보 변경 완료!" << endl;
 		}
@@ -71,6 +88,7 @@ void ProductManager::Product_PK(string _id)
 	}
 }
 
+//상품 정보 파일로 저장하는 함수
 void ProductManager::Product_Save()
 {
 	ofstream file;
@@ -90,6 +108,7 @@ void ProductManager::Product_Save()
 	cout << "Product 파일 저장 완료" << endl;
 }
 
+//상품정보 파일로 로드 함수
 void ProductManager::Product_Load()
 {
 	ifstream file;

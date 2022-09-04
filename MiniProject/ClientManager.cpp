@@ -1,5 +1,6 @@
 #include "ClientManager.h"
 
+//main문에서 고객관리 정보 데이터가 들어가는 함수
 void ClientManager::Client_Input(string _word,
 	string _name, string _phone, string _email)
 {
@@ -9,22 +10,24 @@ void ClientManager::Client_Input(string _word,
 	cout << "\n고객 정보 입력 완료" << endl;
 }
 
+//고객 정보 리스트 공개 함수
 void ClientManager::Client_Display()
 {
 	cout << "ClientCount : " << C_Count << endl;
-	cout << "++++++++++++++++++++++고객 정보 리스트++++++++++++++++++++++++++" << endl;
-	cout << "----------------------------------------------------------------" << endl;
+	cout << "+++++++++++++++++++++++고객 정보 리스트+++++++++++++++++++++++++++" << endl;
+	cout << "------------------------------------------------------------------" << endl;
 	cout << setw(11) << "고객ID" << " | " << setw(10) << "고객 성함" << " | " << setw(15) << "고객 전화번호" << " | " << setw(20) << "고객 이메일" << endl;
-	cout << "----------------------------------------------------------------" << endl;
+	cout << "------------------------------------------------------------------" << endl;
 	for_each(clientList.begin(), clientList.end(), [](Client* c)
 		{
 			cout << setw(11) << c->getCWord() << " | " << setw(10) << c->getCName() << " | "
 				<< setw(15) << c->getCPhone() << " | " << setw(20) << c->getCEmail() << endl;
-			cout << "----------------------------------------------------------------" << endl;
+			cout << "------------------------------------------------------------------" << endl;
 		});
-	cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl << endl;
+	cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl << endl;
 }
 
+//고객 정보 제거 함수
 void ClientManager::Client_Remove(string _word, string _name)
 {
 	for (int i = 0; i < C_Count; i++)
@@ -39,6 +42,7 @@ void ClientManager::Client_Remove(string _word, string _name)
 	}
 }
 
+//고객 정보 전체 제거 함수
 void ClientManager::Client_Remove_All()
 {
 	while (!clientList.empty())
@@ -49,6 +53,7 @@ void ClientManager::Client_Remove_All()
 	cout << "\n고객 정보 전체 삭제 완료" << endl;
 }
 
+//고객 정보 변경 함수
 void ClientManager::Client_Change(string _word, string _name)
 {
 	for (int i = 0; i < ClientManager::C_Count; i++)
@@ -81,6 +86,7 @@ void ClientManager::Client_PK(string _word)
 	}
 }
 
+//고객 정보 파일로 저장 함수
 void ClientManager::Client_Save()
 {
 	ofstream file;
@@ -99,6 +105,7 @@ void ClientManager::Client_Save()
 	cout << "Client 파일 저장 완료" << endl;
 }
 
+//고객 정보 파일로 불러오기 함수
 void ClientManager::Client_Load()
 {
 	//vector<Client*> vecList;
