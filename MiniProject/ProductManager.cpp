@@ -10,17 +10,17 @@ void ProductManager::Product_Input(string _id, string _name, int _price)
 void ProductManager::Product_Display()
 {
 	cout << "ProductCount : " << P_Count << endl;
-	cout << "+++++++++++++++++++++상품 정보 리스트+++++++++++++++++++++" << endl;
-	cout << "----------------------------------------------------------" << endl;
+	cout << "++++++++++++상품 정보 리스트+++++++++++++" << endl;
+	cout << "-----------------------------------------" << endl;
 	cout << setw(11) << "상품 ID" << " | " << setw(11) << "상품 이름" << " | " << setw(12) << "상품 가격" << endl;
-	cout << "----------------------------------------------------------" << endl;
+	cout << "-----------------------------------------" << endl;
 	for_each(productList.begin(), productList.end(),
 		[](Product* p) {
 			cout << setw(11) << p->getPId() << " | " << setw(11) << p->getPName() << " | " 
 				<< setw(10) << p->getPPrice() << "원" << endl;
-			cout << "----------------------------------------------------------" << endl;
+			cout << "-----------------------------------------" << endl;
 		});
-	cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl << endl;
+	cout << "+++++++++++++++++++++++++++++++++++++++++" << endl << endl;
 }
 void ProductManager::Product_Remove(string _id)
 {
