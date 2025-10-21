@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>ajax</h1>
+    <p>asynchronous javascript and xml</p>
+    <form action="ajax" method="post">
+        <div><input type="text" name="userID"></div>
+        <div><input type="text" name="userPW"></div>
+        <div><button>전송</button></div>
+    </form>
+    <div><button id="btn-ajax">ajax 전송</button></div>
+<script>
+//js는 type이 없다.
+let name = "장성호";
+const PI = 3.14;
+console.log("hello js");
+console.log(1+1);
+console.log(name);
+console.log(PI);
+//js에서도 객체
+//document.write("hello js02");
+const person = {
+    name:"장동건",
+    age:30
+}
+console.log(person);
+console.log(person.name);
+console.log(person.age);
+
+
+
+const params = new URLSearchParams();
+params.append("userID","장동건");
+params.append("userPW","5678");
+
+
+const btnAjax = document.querySelector("#btn-ajax");
+btnAjax.addEventListener("click",(e) => {
+    console.log("btnAjax click");
+    //url encoding 방식 form 방식으로 데이터 전달
+    /*
+    fetch("ajax?userID=jjang051&userPW=1234",{
+        method:"post",
+        headers: {
+            "Content-Type":
+                "application/x-www-form-urlencoded"
+        },
+        //body:params
+    })
+     */
+    const sendData = {
+        userID:"유재석",
+        userPW:"5678",
+        age:30
+    };
+    fetch("ajax04",{
+        method:"post",
+        headers: {
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify(sendData)
+    })
+        .then((res)=>res.json())
+        .then(data=>{
+            console.log("서버에서 온 응답 = "+data);
+        })
+    //pormise
+})
+
+
+</script>
+</body>
+</html>

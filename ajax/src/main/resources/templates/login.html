@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>login</h1>
+<form action="login02" method="post">
+    <div><input type="text" name="userID" id="userID"></div>
+    <div><input type="text" name="userPW" id="userPW"></div>
+    <!--<div><button id="btn-login" type="button">전송</button></div>-->
+    <div><button id="btn-login">전송</button></div>
+</form>
+<script>
+    const userID = document.querySelector("#userID");
+    const userPW = document.querySelector("#userPW");
+    const btnLogin = document.querySelector("#btn-login");
+    /*
+    btnLogin.addEventListener("click",(e)=>{
+        e.preventDefault(); //원래 버튼이 form안에 있는 버튼이 가지고 있는 기능을 쓰지마라... 막아버린다.
+        // const userIDValue = userID.value;
+        // const userPWValue = userPW.value;
+        // console.log(userIDValue+"==="+userPWValue);
+        const sendData = {
+            userID:userID.value,
+            userPW:userPW.value
+
+        };
+        fetch("login",{
+            method:"post",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body: JSON.stringify(sendData)
+        })
+            .then(res=>res.json())
+            .then(data=>{
+                console.log(data);
+                console.log(data.isLogin);
+                if(data.isLogin) {
+                    alert("성공")
+                } else {
+                    alert("실패")
+                }
+            })
+        //비동기
+
+    })
+     */
+    //async await
+    btnLogin.addEventListener("click",async (e) => {
+        e.preventDefault();
+        const sendData = {
+            userID:userID.value,
+            userPW:userPW.value
+
+        };
+        const res = await fetch("login",{
+            method:"post",
+            headers: {
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify(sendData)
+        })
+        const data = await res.json();
+        //{isLogin:true}
+        const {isLogin} = data; //가독성이 높아짐....
+        console.log(isLogin);
+        if(isLogin) {
+            alert("성공");
+        } else {
+            alert("실패");
+        }
+    })
+
+
+</script>
+</body>
+</html>

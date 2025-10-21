@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css"/>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body>
+<div class="w-2xl m-auto mt-5 mb-5">
+    <h1 class="text-4xl font-bold mb-5">add</h1>
+    <form action="../member/add" method="post" th:object="${memberDto}">
+        <div class="mb-2"><input type="text" th:field="*{userID}" class="input validator w-full" placeholder="USER ID"></div>
+        <div th:if="${#fields.hasErrors('userID')}" class="validator-hint visible text-error mb-2"
+             th:errors="*{userID}">에러메세지를 직접 입력합니다.
+        </div>
+        <div class="mb-2"><input type="password" th:field="*{userPW}" class="input validator w-full" placeholder="USER PW"></div>
+        <div th:if="${#fields.hasErrors('userPW')}" th:errors="*{userPW}"
+             class="validator-hint visible text-error mb-2"></div>
+        <div class="mb-2"><input type="text" th:field="*{userName}" class="input validator w-full" placeholder="USER NAME"></div>
+        <div th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"
+             class="validator-hint visible text-error mb-2"></div>
+        <div class="mb-2"><input type="text" th:field="*{userEmail}" class="input validator w-full" placeholder="USER EMAIL"></div>
+        <div th:if="${#fields.hasErrors('userEmail')}" th:errors="*{userEmail}"
+             class="validator-hint visible text-error mb-2"></div>
+        <div>
+            <button class="btn btn-primary">Primary</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

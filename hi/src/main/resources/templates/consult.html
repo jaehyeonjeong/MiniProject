@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>빠른 상담</h1>
+<form action="consult-result" method="get">
+    <div>
+        <span>켐퍼스</span>
+        <label>
+            <span>강남</span>
+            <input type="radio" name="region" value="gangnam">
+        </label>
+        <label>
+            <span>종로</span>
+            <input type="radio" name="region" value="jpngro">
+        </label>
+        <label>
+            <span>신촌</span>
+            <input type="radio" name="region" value="sinchon">
+        </label>
+        <label>
+            <span>구로</span>
+            <input type="radio" name="region" value="guro">
+        </label>
+        <label>
+            <span>인천</span>
+            <input type="radio" name="region" value="incheon">
+        </label>
+        <label>
+            <span>일산</span>
+            <input type="radio" name="region" value="ilsan">
+        </label>
+        <label>
+            <span>전주</span>
+            <input type="radio" name="region" value="jeonju">
+        </label>
+
+    </div>
+    <div>
+        <label><span>이름</span><input type="text" name="userName"></label>
+    </div>
+    <div>
+        <label>
+            <span>연락처</span>
+            <select name="tel01">
+                <option value="010">010</option>
+                <option value="011">011</option>
+                <option value="012">012</option>
+                <option value="016">016</option>
+                <option value="017">017</option>
+                <option value="018">018</option>
+                <option value="019">019</option>
+            </select>
+            <input type="text" name="tel02">
+            <input type="text" name="tel03">
+        </label>
+    </div>
+    <div>
+        <label>
+            <span>관심분야</span>
+            <select name="favorite">
+                <option value="">분야를 선택해주세요.</option>
+                <option value="K-디지털">K-디지털</option>
+                <option value="프로그래밍">프로그래밍</option>
+                <option value="데이터분석">데이터분석</option>
+                <option value="AI">AI</option>
+                <option value="정보보안">정보보안</option>
+                <option value="클라우드">클라우드</option>
+                <option value="디자인(웹·편집·영상)">디자인(웹·편집·영상)</option>
+                <option value="건축·기계·제품디자인">건축·기계·제품디자인</option>
+                <option value="CG·VR·게임">CG·VR·게임</option>
+                <option value="자격증">자격증</option>
+            </select>
+        </label>
+    </div>
+    <div>
+        <label>
+            <span>문의사항</span>
+            <textarea name="content"></textarea>
+        </label>
+    </div>
+    <div>
+        <label>
+            <input type="checkbox" name="privacy" value="on">
+            <span>개인정보 수집 및 이용 동의</span>
+        </label>
+    </div>
+    <div>
+        <button>상담신청하기</button>
+    </div>
+
+</form>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Members</title>
+    <style>
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        li {
+            margin-bottom: 12px;
+            background: #fff;
+            padding: 12px 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        li:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        li a {
+            text-decoration: none;
+            color: #333;
+            display: block;
+        }
+
+        li span {
+            margin-right: 10px;
+            font-size: 14px;
+        }
+
+        li span:first-child {
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .add-member {
+            display: block;
+            width: fit-content;
+            margin: 30px auto 0;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 18px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+
+        .add-member:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<h1>members</h1>
+<ul>
+    <li th:each="item:${memberList}">
+        <a th:href="@{../member/detail/{id}(id=${item.id})}">
+            <span th:text="${item.id}"></span>
+            <span th:text="${item.userID}"></span>
+            <span th:text="${item.userName}"></span>
+            <span th:text="${item.userEmail}"></span>
+        </a>
+    </li>
+</ul>
+<div>
+    <a class="add-member" href="../member/add">회원가입</a>
+</div>
+</body>
+</html>

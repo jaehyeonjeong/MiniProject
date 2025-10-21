@@ -1,0 +1,21 @@
+#?????....
+#spring.application.name=hi
+#spring.thymeleaf.prefix=classpath:/myhtml/
+#spring.thymeleaf.suffix=.html
+#server.port=8081
+#server.address=0.0.0.0
+spring:
+  application:
+    name: hi
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+  #thymeleaf:
+    #cache: false
+    #prefix: classpath:/templates/
+    #suffix: .html
+server:
+  port: 8080
+

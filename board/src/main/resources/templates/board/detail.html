@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>detail</h1>
+    <ul>
+        <li><span th:text="${boardDto.title}"></span></li>
+        <li><span th:text="${boardDto.writer}"></span></li>
+        <li><span th:text="${boardDto.content}"></span></li>
+        <li><span th:text="${boardDto.regdate}"></span></li>
+    </ul>
+</body>
+</html>

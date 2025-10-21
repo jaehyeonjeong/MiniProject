@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>detail</h1>
+    <ul>
+        <li>번호 : <span th:text = "${findedBoardDto.idx}"></span></li>
+        <li>제목 : <span th:text = "${findedBoardDto.title}"></span></li>
+        <li>글쓴이 : <span th:text = "${findedBoardDto.writer}"></span></li>
+        <li>날짜 : <span th:text = "${findedBoardDto.regdate}"></span></li>
+        <li>조회수 : <span th:text = "${findedBoardDto.hit}"></span></li>
+    </ul>
+</body>
+</html>

@@ -1,0 +1,15 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: db02
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: true
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521:xe
+    username: springjjang051
+    password: 1234

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>detail</h1>
+    <div>
+        <div>no : <span th:text="${findedMember.id}"></span></div>
+        <div>이름 : <span th:text="${findedMember.userName}"></span></div>
+        <div>이메일 : <span th:text="${findedMember.userEmail}"></span></div>
+    </div>
+    <div>
+        <div><a href="../member/edit" th:href="@{|/member/${findedMember.id}/edit|}">수정</a></div>
+        <div><a href="../member/edit" th:href="@{/member/{id}/edit(id=${findedMember.id})}">수정</a></div>
+        <div><a href="" th:href="@{/member/{id}/delete(id=${findedMember.id})}">삭제</a></div>
+    </div>
+</body>
+</html>

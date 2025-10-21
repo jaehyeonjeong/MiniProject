@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: board02
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521:xe
+    username: springjjang051
+    password: 1234
+mybatis:
+  config-location: classpath:mybatis/config/config.xml
+  mapper-locations: classpath:mybatis/mapper/**/*.xml
+  type-aliases-package: com.jjang051.board02.dto
