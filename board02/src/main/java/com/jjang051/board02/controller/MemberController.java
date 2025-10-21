@@ -19,6 +19,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RequestMapping("/member")
 public class MemberController {
+    //수절
 
     private final MemberDao memberDao;
 
