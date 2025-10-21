@@ -101,6 +101,8 @@ public class BoardController {
     }
     @GetMapping("/{id}/detail")
     public String write(@PathVariable("id") int id, Model model) {
+        
+        // 수정하는 프로젝트
         BoardDto boardDto = boardDao.findById(id);
         BoardDto prevBoardDto = boardDao.findPrev(id);
         BoardDto nextBoardDto = boardDao.findNext(id);
