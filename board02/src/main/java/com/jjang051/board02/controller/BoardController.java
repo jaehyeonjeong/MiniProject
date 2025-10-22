@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.HashMap;
 import java.util.List;
@@ -177,8 +178,9 @@ public class BoardController {
         return "board/search-list";
     }
     // edit를 page확인을 위한 임시 controller
-    @GetMapping("/edit")
-    public String edit(Model model, HttpSession session) {
+    @GetMapping("/{id}/edit")
+    public String edit(@PathVariable ("id")  int id,
+            Model model, HttpSession session) {
         MemberDto loggedMember = (MemberDto)session.getAttribute("loggedMember");
         BoardDto boardDto = new BoardDto();
         if(loggedMember!=null){
@@ -187,8 +189,45 @@ public class BoardController {
         model.addAttribute("boardDto", boardDto);
         return "board/edit";
     }
-    @PostMapping("/edit")
-    public String editProcess() {
+    @PostMapping("/{id}/edit")
+    public String editProcess(@ModelAttribute BoardDto boardDto,
+                              BindingResult bindingResult,
+                              Model model,
+                              HttpSession session,
+                              @RequestParam String secretPW) {
+
+        // 에러발생시
+        if (bindingResult.hasErrors()) {
+            return "board/edit";
+        }
+
+        // 체크박스 처리: 체크 안 했으면 공개글
+        if (boardDto.getSecretValue() == null) {
+            boardDto.setSecretValue("N");
+        }
+        // 사용자 이름과 작성자 이름 동기화
+        MemberDto loginUser = (MemberDto) session.getAttribute("loggedMember");
+        if (loginUser != null) {
+            boardDto.setWriter(loginUser.getUserName());
+            boardDto.setTitle(boardDto.getTitle());
+            boardDto.setContent(boardDto.getContent());
+        }
+
+        // 비밀글 체크박스가 null이면 'N'으로 처리
+        if (boardDto.getSecret() == null || boardDto.getSecret().isBlank()) {
+            boardDto.setSecret("N");
+        }
+
+        // 비밀글일 경우 비밀번호가 없으면 생성/저장
+        if ("Y".equals(boardDto.getSecretValue())) {
+            boardDto.setSecretPW(secretPW); // 사용자가 입력한 비밀번호로 저장
+        }
+
+        int result = boardDao.updateBoard(boardDto);
+        if(result > 0) {
+            return "redirect:/board/list";
+        }
+
         return "board/edit";
     }
 }
