@@ -87,7 +87,11 @@ public class BoardController {
         return "board/write";
     }
     @PostMapping("/write")
-    public String writeProcess(@Valid BoardDto boardDto, BindingResult bindingResult, Model model, HttpSession session) {
+    public String writeProcess(@Valid BoardDto boardDto,
+                               BindingResult bindingResult,
+                               Model model,
+                               HttpSession session,
+                               @RequestParam String secretPW) {
         if (bindingResult.hasErrors()) {
             return "board/write";
         }
@@ -104,9 +108,11 @@ public class BoardController {
         }
 
         // 비밀글일 경우 비밀번호가 없으면 생성/저장
-        if ("Y".equals(boardDto.getSecretValue()) && boardDto.getSecretPW() == null) {
-            boardDto.setSecretPW(""); // 사용자가 입력한 비밀번호로 저장
+        if ("Y".equals(boardDto.getSecretValue())) {
+            boardDto.setSecretPW(secretPW); // 사용자가 입력한 비밀번호로 저장
         }
+//
+//        System.out.println("secretPW ==== > " + secretPW);
 
         int result = boardDao.writeBoard(boardDto);
         if(result > 0) {
