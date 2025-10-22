@@ -175,12 +175,12 @@ public class BoardController {
         model.addAttribute("searchList", searchList);
         return "board/search-list";
     }
-    // edit를 page확인을 위한 임시 controller
+    // edit page로 넘어가는 controller
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable ("id")  int id,
             Model model, HttpSession session) {
         MemberDto loggedMember = (MemberDto)session.getAttribute("loggedMember");
-        BoardDto boardDto = new BoardDto();
+        BoardDto boardDto = boardDao.findById(id);
         if(loggedMember!=null){
             boardDto.setWriter(loggedMember.getUserName());
         }
@@ -210,22 +210,18 @@ public class BoardController {
             boardDto.setTitle(boardDto.getTitle());
             boardDto.setContent(boardDto.getContent());
         }
-
         // 비밀글 체크박스가 null이면 'N'으로 처리
         if (boardDto.getSecret() == null || boardDto.getSecret().isBlank()) {
             boardDto.setSecret("N");
         }
-
         // 비밀글일 경우 비밀번호가 없으면 생성/저장
         if ("Y".equals(boardDto.getSecretValue())) {
             boardDto.setSecretPW(secretPW); // 사용자가 입력한 비밀번호로 저장
         }
-
         int result = boardDao.updateBoard(boardDto);
         if(result > 0) {
             return "redirect:/board/list";
         }
-
         return "board/edit";
     }
 }

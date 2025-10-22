@@ -65,7 +65,8 @@
         </div>
         <!-- 수정/삭제 버튼 -->
         <div class="form-control mt-4">
-            <a th:href="@{/board/{id}/edit(id=${boardDto.id})}" class="btn btn-primary w-full">
+            <a th:href="@{/board/{id}/edit(id=${boardDto.id})}" class="btn btn-primary w-full"
+            th:if="${session.loggedMember != null and session.loggedMember.userID == boardDto.id}">
                 수정/삭제
             </a>
         </div>
