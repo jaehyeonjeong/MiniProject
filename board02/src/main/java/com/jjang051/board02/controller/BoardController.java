@@ -100,7 +100,7 @@ public class BoardController {
         // 로그인 사용자 이름과 작성자 이름 동기화
         MemberDto loginUser = (MemberDto) session.getAttribute("loggedMember");
         if (loginUser != null) {
-            boardDto.setWriter(loginUser.getUserID());
+            boardDto.setWriter(loginUser.getUserName());
         }
 
         int result = boardDao.writeBoard(boardDto);
@@ -130,7 +130,7 @@ public class BoardController {
 
         model.addAttribute("secretPW", boardDto);
         System.out.println("detail : boardDto.getSecretPW==="+boardDto.getSecretPW());
-        
+
         if (isSecret && !isWriter) {
             model.addAttribute("error", "이 글은 작성자만 볼 수 있습니다.");
             return "board/error";
