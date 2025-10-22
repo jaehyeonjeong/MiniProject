@@ -1,8 +1,11 @@
 package com.jjang051.board02.controller;
 
+import com.jjang051.board02.dao.BoardDao;
 import com.jjang051.board02.dao.MemberDao;
+import com.jjang051.board02.dto.BoardDto;
 import com.jjang051.board02.dto.LoginDto;
 import com.jjang051.board02.dto.MemberDto;
+import com.jjang051.board02.dto.PageDto;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -22,6 +26,9 @@ public class MemberController {
     //수절
 
     private final MemberDao memberDao;
+    // 아마도 BoardDao에서 정의된 findAll함수를 이용해서 가져오면 될 것 같은데
+    private final BoardDao boardDao;
+    // 대신에 준이가 새로 만들어준 쿼리를 통해 Mapper에 등록을 하고 새로 함수를 가져와야 할 듯
 
     @GetMapping("/signup")
     public String signup(Model model) {
@@ -92,8 +99,14 @@ public class MemberController {
         return "redirect:/";
     }
     @GetMapping("/info")
-    public String info() {
+    public String info(Model model) {
         //model.addAttribute("loginDto", new LoginDto());
+        // 서로 다른 컨트롤러에서 board 데이터를 가져오는 방법???
+        PageDto pageDto = new PageDto();
+        pageDto.setPage(1);
+        pageDto.setSize(10);
+        List<BoardDto> boardList = boardDao.findAll(pageDto);
+        model.addAttribute("boardList", boardList);
         return "member/info";
     }
     @GetMapping("/logout")
