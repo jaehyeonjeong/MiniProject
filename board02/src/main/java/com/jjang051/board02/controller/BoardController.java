@@ -130,6 +130,7 @@ public class BoardController {
 
         MemberDto loginUser = (MemberDto) session.getAttribute("loggedMember");
 
+        System.out.println("boardDto.getUserID : " + boardDto.getUserID());
         // 비밀글 접근 제한
         if ("Y".equals(boardDto.getSecretValue())) {
             boolean isWriter = loginUser != null && loginUser.getUserID().equals(boardDto.getWriter());

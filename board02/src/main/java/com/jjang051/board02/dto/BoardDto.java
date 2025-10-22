@@ -21,6 +21,7 @@ public class BoardDto {
     private String password;
     private String secretValue;  // 'Y' or 'N'
     private String secretPW;
+    private String userID;
 
     public String getSecret() { return secretValue; }
     public void setSecret(String secretValue) { this.secretValue = secretValue; }
