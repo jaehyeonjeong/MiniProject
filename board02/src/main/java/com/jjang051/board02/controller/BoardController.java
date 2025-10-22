@@ -100,10 +100,12 @@ public class BoardController {
             boardDto.setSecretValue("N");
         }
 
-        // 로그인 사용자 이름과 작성자 이름 동기화
+        // 로그인 사용자 이름과 작성자 이름 동기화와 userID도 같이 데이터를 넘김
         MemberDto loginUser = (MemberDto) session.getAttribute("loggedMember");
         if (loginUser != null) {
             boardDto.setWriter(loginUser.getUserName());
+            boardDto.setUserID(loginUser.getUserID());
+            System.out.println("loginUser.getUserID === " + loginUser.getUserID());
         }
 
         // 비밀글일 경우 비밀번호가 없으면 생성/저장
