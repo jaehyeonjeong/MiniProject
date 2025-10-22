@@ -128,6 +128,9 @@ public class BoardController {
         boolean isSecret = "Y".equals(boardDto.getSecretValue());
         boolean isWriter = loginUser != null && loginUser.getUserID().equals(boardDto.getWriter());
 
+        model.addAttribute("secretPW", boardDto);
+        System.out.println("detail : boardDto.getSecretPW==="+boardDto.getSecretPW());
+        
         if (isSecret && !isWriter) {
             model.addAttribute("error", "이 글은 작성자만 볼 수 있습니다.");
             return "board/error";
@@ -137,10 +140,6 @@ public class BoardController {
         model.addAttribute("boardDto", boardDto);
         model.addAttribute("prevBoardDto", prevBoardDto);
         model.addAttribute("nextBoardDto", nextBoardDto);
-
-        model.addAttribute("secretPW", boardDto);
-        System.out.println("detail : boardDto==="+boardDto.getSecretPW());
-
         return "board/detail";
     }
 
