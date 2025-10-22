@@ -111,8 +111,6 @@ public class BoardController {
         if ("Y".equals(boardDto.getSecretValue())) {
             boardDto.setSecretPW(secretPW); // 사용자가 입력한 비밀번호로 저장
         }
-//
-//        System.out.println("secretPW ==== > " + secretPW);
 
         int result = boardDao.writeBoard(boardDto);
         if(result > 0) {
