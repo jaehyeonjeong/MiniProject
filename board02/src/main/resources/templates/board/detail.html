@@ -67,6 +67,7 @@
         <div class="mt-6 flex justify-between items-center">
             <!-- 왼쪽: 수정/삭제 버튼 -->
             <a th:href="@{/board/{id}/edit(id=${boardDto.id})}"
+               th:if="${session.loggedMember.userID == boardDto.userID}"
                class="btn btn-primary">
                 수정/삭제
             </a>
