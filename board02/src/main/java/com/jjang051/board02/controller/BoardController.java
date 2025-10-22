@@ -103,6 +103,11 @@ public class BoardController {
             boardDto.setWriter(loginUser.getUserID());
         }
 
+        // 비밀글일 경우 비밀번호가 없으면 생성/저장
+        if ("Y".equals(boardDto.getSecretValue()) && boardDto.getSecretPW() == null) {
+            boardDto.setSecretPW(""); // 사용자가 입력한 비밀번호로 저장
+        }
+
         int result = boardDao.writeBoard(boardDto);
         if(result > 0) {
             return "redirect:/board/list";
@@ -112,34 +117,34 @@ public class BoardController {
     }
 
     @GetMapping("/{id}/detail")
-    public String detail(@PathVariable("id") int id, Model model, HttpSession session) {
+    public String detail(@PathVariable("id") int id,
+                         @RequestParam(value = "pw", required = false) String pw,
+                         Model model,
+                         HttpSession session) {
         BoardDto boardDto = boardDao.findById(id);
-        if(boardDto == null) {
-            model.addAttribute("error", "존재하지 않는 글입니다.");
-            return "board/error";
-        }
-
         BoardDto prevBoardDto = boardDao.findPrev(id);
         BoardDto nextBoardDto = boardDao.findNext(id);
 
         MemberDto loginUser = (MemberDto) session.getAttribute("loggedMember");
 
         // 비밀글 접근 제한
-        boolean isSecret = "Y".equals(boardDto.getSecretValue());
-        boolean isWriter = loginUser != null && loginUser.getUserID().equals(boardDto.getWriter());
+        if ("Y".equals(boardDto.getSecretValue())) {
+            boolean isWriter = loginUser != null && loginUser.getUserID().equals(boardDto.getWriter());
+            boolean pwCorrect = pw != null && pw.equals(boardDto.getSecretPW());
 
-        if (isSecret && !isWriter) {
-            model.addAttribute("error", "이 글은 작성자만 볼 수 있습니다.");
-            return "board/error";
+            if (!isWriter && !pwCorrect) {
+                model.addAttribute("boardDto", boardDto);
+                model.addAttribute("error", "비밀글입니다. 비밀번호를 입력해주세요.");
+                return "board/secret-check"; // 비밀번호 입력 페이지
+            }
         }
 
-        // boardDto와 인접글 DTO 추가
         model.addAttribute("boardDto", boardDto);
         model.addAttribute("prevBoardDto", prevBoardDto);
         model.addAttribute("nextBoardDto", nextBoardDto);
-
         return "board/detail";
     }
+
 
     @PostMapping("/delete")
     @ResponseBody
