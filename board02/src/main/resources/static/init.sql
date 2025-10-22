@@ -89,3 +89,16 @@ SET title = '수정된 제목',
     content = '수정된 본문입니다.',
     writer = '수정된 작성자입니다'
 WHERE id = 1523;
+
+SELECT
+    b.id,
+    b.title,
+    b.content,
+    b.regdate,
+    b.hit,
+    b.secretValue,
+    m.userid AS writer_id,
+    m.username AS writer_name
+FROM board b
+         JOIN member m ON b.writer = m.userid
+WHERE m.userid = 'jjang051' AND m.username = '신준3333';
