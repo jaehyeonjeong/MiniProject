@@ -170,4 +170,19 @@ public class BoardController {
         model.addAttribute("searchList", searchList);
         return "board/search-list";
     }
+    // edit를 page확인을 위한 임시 controller
+    @GetMapping("/edit")
+    public String edit(Model model, HttpSession session) {
+        MemberDto loggedMember = (MemberDto)session.getAttribute("loggedMember");
+        BoardDto boardDto = new BoardDto();
+        if(loggedMember!=null){
+            boardDto.setWriter(loggedMember.getUserName());
+        }
+        model.addAttribute("boardDto", boardDto);
+        return "board/edit";
+    }
+    @PostMapping("/edit")
+    public String editProcess() {
+        return "board/edit";
+    }
 }

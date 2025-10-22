@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head::head('게시글수정')}"></head>
+<body>
+<header th:replace="~{fragments/header}"></header>
+
+<form th:action="@{'../board/edit/' + ${boardDto.id}}" method="post" th:object="${boardDto}" class="max-w-2xl mx-auto mt-10 space-y-4">
+
+    <!-- 수정 할 제목 -->
+    <h1 class="text-3xl my-10 font-bold">게시글수정</h1>
+    <div class="form-control">
+        <label class="label">
+            <span class="label-text font-bold mb-2">제목</span>
+        </label>
+        <input type="text" th:field="*{title}" placeholder="수정 할 제목을 입력하세요"
+               class="input input-bordered w-full"/>
+        <div th:if="${#fields.hasErrors('title')}"
+             th:errors="*{title}"
+             class="text-error text-sm mt-1"></div>
+    </div>
+
+    <!-- 글쓴이 -->
+    <div class="form-control">
+        <label class="label">
+            <span class="label-text font-bold mb-2">글쓴이</span>
+        </label>
+        <input type="text" th:field="*{writer}" placeholder="작성자 이름"
+               class="input input-bordered w-full" th:value="${boardDto.writer}" readonly/>
+        <div th:if="${#fields.hasErrors('writer')}"
+             th:errors="*{writer}"
+             class="text-error text-sm mt-1"></div>
+    </div>
+
+    <!-- 수정 할 내용 -->
+    <div class="form-control">
+        <label class="label">
+            <span class="label-text font-bold mb-2">내용</span>
+        </label>
+        <textarea th:field="*{content}" placeholder="수정 할 내용을 입력하세요"
+                  class="textarea textarea-bordered h-32 w-full"></textarea>
+        <div th:if="${#fields.hasErrors('content')}"
+             th:errors="*{content}"
+             class="text-error text-sm mt-1"></div>
+    </div>
+
+    <!-- 삭제 비밀번호 -->
+    <div class="form-control">
+        <label class="label">
+            <span class="label-text font-bold mb-2">삭제 비밀번호</span>
+        </label>
+        <input type="password" th:field="*{password}" placeholder="비밀번호 입력"
+               class="input input-bordered w-full"/>
+        <div th:if="${#fields.hasErrors('password')}"
+             th:errors="*{password}"
+             class="text-error text-sm mt-1"></div>
+    </div>
+
+    <!-- 비밀글 표시 여부 -->
+    <div class="form-control mb-4">
+        <label class="cursor-pointer label">
+            <span class="label-text font-bold">비밀글로 설정</span>
+            <input type="checkbox" id="secretCheck" th:field="*{secret}" value="Y" class="checkbox checkbox-primary"
+                   th:checked="${boardDto.secret == 'Y'}"/>
+        </label>
+    </div>
+
+    <!-- 비밀글PW -->
+    <div class="form-control mb-4" id="secretPWDiv"
+         th:style="${boardDto.secret == 'Y'} ? 'display:block;' : 'display:none;'">
+        <label class="label">
+            <span class="label-text font-bold">비밀글PW</span>
+        </label>
+        <input type="password" th:field="*{secretPW}" placeholder="비밀번호 입력" class="input input-bordered w-full" />
+    </div>
+
+    <script>
+        const secretCheck = document.getElementById('secretCheck');
+        const secretPWDiv = document.getElementById('secretPWDiv');
+
+        secretCheck.addEventListener('change', () => {
+            if(secretCheck.checked) {
+                secretPWDiv.style.display = 'block';
+            } else {
+                secretPWDiv.style.display = 'none';
+            }
+        });
+    </script>
+
+    <!-- 수정/삭제 버튼 -->
+    <div class="form-control mt-1 flex gap-2">
+        <button class="btn btn-primary flex-1 py-2">수정</button>
+        <a th:href="@{'../board/delete/' + ${boardDto.id}}" class="btn btn-error flex-1 py-2"
+           onclick="return confirm('정말 삭제하시겠습니까?');">삭제</a>
+    </div>
+
+
+</form>
+
+<div th:replace="~{fragments/footer::footer-sns}"></div>
+</body>
+</html>
