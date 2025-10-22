@@ -48,3 +48,32 @@ CREATE SEQUENCE board_seq
 insert into board(id,title,content,writer,regdate,hit,password) values
     (board_seq.nextval,'테스트','테스트','테스트유저',sysdate,1,'1234');
 select * FROM board;
+
+
+CREATE TABLE board (
+                       id        NUMBER PRIMARY KEY,
+                       writer    VARCHAR2(100) NOT NULL,
+                       title     VARCHAR2(3000) NOT NULL,
+                       content   VARCHAR2(3000) NOT NULL,
+                       regdate   DATE DEFAULT SYSDATE,
+                       hit       NUMBER,
+                       password  VARCHAR2(100)
+);
+
+ALTER TABLE board
+    ADD secretValue CHAR(1) DEFAULT 'N'
+        CONSTRAINT board_secretValue_ck CHECK (secretValue IN ('Y', 'N'));
+
+ALTER TABLE board
+    ADD secretPW VARCHAR2(100);
+
+
+
+--비밀게시글 삽입 예시
+INSERT INTO board (id, title, content, writer, regdate, hit, password, secretValue, secretPW)
+VALUES (board_seq.nextval, '비밀글 제목', '비밀 내용', 'jjang051', SYSDATE, 0, '1234', 'Y', '5678');
+
+--전체 게시글 비밀글 표시 포함
+SELECT id, title, writer, secretValue FROM board;
+--비밀게시글만 필터링
+SELECT * FROM board WHERE secretValue = 'Y';
