@@ -46,7 +46,7 @@
     <!-- 비밀번호 -->
     <div class="form-control">
         <label class="label">
-            <span class="label-text font-bold mb-2">비밀번호</span>
+            <span class="label-text font-bold mb-2">삭제 비밀번호</span>
         </label>
         <input type="password" th:field="*{password}" placeholder="비밀번호 입력"
                class="input input-bordered w-full"/>
@@ -58,9 +58,31 @@
     <div class="form-control mb-4">
         <label class="cursor-pointer label">
             <span class="label-text font-bold">비밀글로 설정</span>
-            <input type="checkbox" th:field="*{secret}" value="Y" class="checkbox checkbox-primary" />
+            <input type="checkbox" id="secretCheck" th:field="*{secret}" value="Y" class="checkbox checkbox-primary" />
         </label>
     </div>
+
+    <!-- 비밀번호 입력 (숨김) -->
+    <div class="form-control mb-4" id="secretPWDiv" style="display: none;">
+        <label class="label">
+            <span class="label-text font-bold">비밀글PW</span>
+        </label>
+        <input type="password" th:field="*{secretPW}" placeholder="비밀번호 입력" class="input input-bordered w-full" />
+    </div>
+
+    <script>
+        const secretCheck = document.getElementById('secretCheck');
+        const secretPWDiv = document.getElementById('secretPWDiv');
+
+        secretCheck.addEventListener('change', () => {
+            if(secretCheck.checked) {
+                secretPWDiv.style.display = 'block';
+            } else {
+                secretPWDiv.style.display = 'none';
+            }
+        });
+    </script>
+
 
 
 
