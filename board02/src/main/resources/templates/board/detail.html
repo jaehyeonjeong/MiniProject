@@ -39,15 +39,7 @@
             <span class="px-3 py-2 rounded bg-base-200" th:text="${boardDto.regdate}"></span>
         </div>
 
-        <!-- 비밀번호 입력 + 삭제 버튼 -->
-        <div class="form-control mb-6">
-            <label class="label font-bold">삭제 비밀번호</label>
-            <div class="flex gap-2">
-                <input type="password" name="password" id="password" placeholder="password"
-                       class="input input-bordered w-full"/>
-                <button id="btn-delete" class="btn btn-error">삭제</button>
-            </div>
-        </div>
+
 
         <!-- 이전글 / 다음글 -->
         <div class="mt-4 space-y-2 text-sm text-gray-600">
@@ -71,10 +63,17 @@
                 다음 글이 없습니다.
             </div>
         </div>
-        <!-- 수정/삭제 버튼 -->
-        <div class="form-control mt-4">
-            <a th:href="@{'/board/edit/' + ${boardDto.writer}}" class="btn btn-primary w-full">
+        <!-- 하단 버튼 영역 -->
+        <div class="mt-6 flex justify-between items-center">
+            <!-- 왼쪽: 수정/삭제 버튼 -->
+            <a th:href="@{/board/{id}/edit(id=${boardDto.id})}"
+               class="btn btn-primary">
                 수정/삭제
+            </a>
+
+            <!-- 오른쪽: 목록으로 버튼 -->
+            <a th:href="@{/board/list}" class="btn btn-outline">
+                목록으로
             </a>
         </div>
     </div>
