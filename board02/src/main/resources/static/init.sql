@@ -90,15 +90,36 @@ SET title = '수정된 제목',
     writer = '수정된 작성자입니다'
 WHERE id = 1523;
 
+
+
+CREATE TABLE copy_board AS
+SELECT * FROM board;
+
+ALTER TABLE copy_board
+    ADD userid VARCHAR2(20);
+
+--업데이트부분은 DB 값 확인 후 값 입력 필요
+UPDATE copy_board
+SET USERID = 'song'
+WHERE ID = 1523;
+
+
+ALTER TABLE copy_board
+    ADD CONSTRAINT fk_copy_board_userid
+        FOREIGN KEY(userid)
+            REFERENCES member(userid);
+
+
 SELECT
     b.id,
+    b.userid,
     b.title,
     b.content,
     b.regdate,
     b.hit,
     b.secretValue,
-    m.userid AS writer_id,
+    m.userid   AS writer_id,
     m.username AS writer_name
-FROM board b
-         JOIN member m ON b.writer = m.userid
-WHERE m.userid = 'jjang051' AND m.username = '신준3333';
+FROM copy_board b
+         JOIN member m ON b.userid = m.userid
+ORDER BY b.id DESC;
