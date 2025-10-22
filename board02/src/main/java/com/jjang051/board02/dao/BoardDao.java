@@ -13,10 +13,18 @@ public interface BoardDao {
     List<BoardDto> findAll(PageDto pageDto);
 
     BoardDto findById(int id);
+
     int deleteBoard(BoardDto boardDto);
     int totalBoard(PageDto pageDto);
     List<BoardDto> search(@Param("keyword") String keyword,
                           @Param("type") String type);
+
     BoardDto findPrev(int id);
     BoardDto findNext(int id);
+
+    // 추가
+    int updateBoard(BoardDto boardDto);
+
+    // 비밀글 비번 조회(xml에 있음)
+    String secretPW(BoardDto boardDto);
 }
