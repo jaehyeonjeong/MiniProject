@@ -57,9 +57,7 @@ public class BoardController {
             page = totalPages;
             return "redirect:/board/list?page="+page+"&size="+size;
         } // 마지막 보다 커지지 않게...
-        System.out.println("pageDto==="+pageDto);
         List<BoardDto> boardList = boardDao.findAll(pageDto);
-        System.out.println("페이지 = "+boardList.size());
         model.addAttribute("boardList", boardList);
         PageDto responsePageDto = PageDto.builder()
                 .page(page)
@@ -154,7 +152,6 @@ public class BoardController {
     @PostMapping("/delete")
     @ResponseBody
     public Map<String, Boolean> delete(@RequestBody BoardDto boardDto) {
-        System.out.println("boardDto==="+boardDto);
         int result = boardDao.deleteBoard(boardDto);
         Map<String, Boolean> map = new HashMap<>();
 
