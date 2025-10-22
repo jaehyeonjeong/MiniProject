@@ -4,7 +4,7 @@
 <body>
 <header th:replace="~{fragments/header}"></header>
 
-<form th:action="@{'../board/edit/' + ${boardDto.id}}" method="post" th:object="${boardDto}" class="max-w-2xl mx-auto mt-10 space-y-4">
+<form th:action="@{/board/{id}/edit(id=${boardDto.id})}" method="post" th:object="${boardDto}" class="max-w-2xl mx-auto mt-10 space-y-4">
 
     <!-- 수정 할 제목 -->
     <h1 class="text-3xl my-10 font-bold">게시글수정</h1>
@@ -43,18 +43,6 @@
              class="text-error text-sm mt-1"></div>
     </div>
 
-    <!-- 삭제 비밀번호 -->
-    <div class="form-control">
-        <label class="label">
-            <span class="label-text font-bold mb-2">삭제 비밀번호</span>
-        </label>
-        <input type="password" th:field="*{password}" placeholder="비밀번호 입력"
-               class="input input-bordered w-full"/>
-        <div th:if="${#fields.hasErrors('password')}"
-             th:errors="*{password}"
-             class="text-error text-sm mt-1"></div>
-    </div>
-
     <!-- 비밀글 표시 여부 -->
     <div class="form-control mb-4">
         <label class="cursor-pointer label">
@@ -86,12 +74,64 @@
         });
     </script>
 
-    <!-- 수정/삭제 버튼 -->
+    <!-- 버튼 -->
     <div class="form-control mt-1 flex gap-2">
         <button class="btn btn-primary flex-1 py-2">수정</button>
-        <a th:href="@{'../board/delete/' + ${boardDto.id}}" class="btn btn-error flex-1 py-2"
-           onclick="return confirm('정말 삭제하시겠습니까?');">삭제</a>
+
+        <!-- 삭제 버튼 (모달 열기용) -->
+        <button type="button" class="btn btn-error flex-1 py-2" onclick="deleteModal.showModal()">
+            삭제
+        </button>
     </div>
+
+    <!-- ✅ 삭제 비밀번호 입력 모달 -->
+    <dialog id="deleteModal" class="modal">
+        <div class="modal-box">
+            <h3 class="font-bold text-lg mb-4">게시글 삭제</h3>
+            <p class="mb-3">게시글을 삭제하려면 비밀번호를 입력하세요.</p>
+
+            <input type="password" id="deletePassword"
+                   placeholder="비밀번호 입력"
+                   class="input input-bordered w-full mb-4"/>
+
+            <div class="flex justify-end gap-2">
+                <form method="dialog">
+                    <button class="btn">취소</button>
+                </form>
+                <button id="confirmDelete" class="btn btn-error">삭제</button>
+            </div>
+        </div>
+    </dialog>
+
+    <script th:inline="javascript">
+        const confirmDelete = document.getElementById('confirmDelete');
+        const deletePassword = document.getElementById('deletePassword');
+        const postId = /*[[${boardDto.id}]]*/ 0;
+
+        confirmDelete.addEventListener('click', async () => {
+            const sendPassword = deletePassword.value;
+
+            if (!sendPassword) {
+                alert("비밀번호를 입력하세요.");
+                return;
+            }
+
+            const res = await fetch("/board/delete", {
+                headers: {"Content-Type": "application/json"},
+                method: "post",
+                body: JSON.stringify({password: sendPassword, id: postId})
+            });
+
+            const data = await res.json();
+            if (data.success) {
+                alert("삭제되었습니다.");
+                location.href = "/board/list";
+            } else {
+                alert("비밀번호가 올바르지 않습니다.");
+            }
+        });
+    </script>
+
 
 
 </form>
