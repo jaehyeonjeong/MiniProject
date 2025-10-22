@@ -83,4 +83,9 @@ SELECT secretPW
 FROM board
 WHERE id = 5
   AND secretValue = 'Y';
-
+--SQL 글쓰기 수정 입니다.
+UPDATE board
+SET title = '수정된 제목',
+    content = '수정된 본문입니다.',
+    writer = '수정된 작성자입니다'
+WHERE id = 1523;
