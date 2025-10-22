@@ -77,3 +77,10 @@ VALUES (board_seq.nextval, '비밀글 제목', '비밀 내용', 'jjang051', SYSD
 SELECT id, title, writer, secretValue FROM board;
 --비밀게시글만 필터링
 SELECT * FROM board WHERE secretValue = 'Y';
+
+--비밀글의 비밀번호만 따로 출력(SELECT) 하는 쿼리
+SELECT secretPW
+FROM board
+WHERE id = 5
+  AND secretValue = 'Y';
+
