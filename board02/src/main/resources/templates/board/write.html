@@ -54,6 +54,16 @@
              th:errors="*{password}"
              class="text-error text-sm mt-1"></div>
     </div>
+    <!-- 비밀글 표시 여부 -->
+    <div class="form-control mb-4">
+        <label class="cursor-pointer label">
+            <span class="label-text font-bold">비밀글로 설정</span>
+            <input type="checkbox" th:field="*{secret}" value="Y" class="checkbox checkbox-primary" />
+        </label>
+    </div>
+
+
+
 
     <!-- 버튼 -->
     <div class="form-control mt-6">

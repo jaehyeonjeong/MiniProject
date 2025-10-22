@@ -3,76 +3,81 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jjang051.board02.dao.BoardDao">
+
+    <!-- 검색 조건 동적쿼리 -->
     <sql id="searchWhere">
-        <!-- 동적쿼리 -->
         <where>
-            <if test="keyword!=null and keyword !=''">
+            <if test="keyword != null and keyword != ''">
                 <choose>
-                    <when test="type=='title'">
-                        title LIKE CONCAT(CONCAT('%',#{keyword}),'%')
+                    <when test="type == 'title'">
+                        title LIKE CONCAT(CONCAT('%', #{keyword}), '%')
                     </when>
-                    <when test="type=='writer'">
-                        writer LIKE CONCAT(CONCAT('%',#{keyword}),'%')
+                    <when test="type == 'writer'">
+                        writer LIKE CONCAT(CONCAT('%', #{keyword}), '%')
                     </when>
-                    <when test="type=='content'">
-                        content LIKE CONCAT(CONCAT('%',#{keyword}),'%')
+                    <when test="type == 'content'">
+                        content LIKE CONCAT(CONCAT('%', #{keyword}), '%')
                     </when>
                 </choose>
             </if>
         </where>
     </sql>
 
+    <!-- 게시글 작성 -->
     <insert id="writeBoard" parameterType="BoardDto">
-        insert into board(id,title,content,writer,regdate,hit,password) values
-        (board_seq.nextval,#{title},#{content},#{writer},sysdate,1,#{password})
+        INSERT INTO board(id, title, content, writer, regdate, hit, password, secretValue)
+        VALUES (board_seq.nextval, #{title}, #{content}, #{writer}, SYSDATE, 1, #{password}, #{secretValue})
     </insert>
+
+    <!-- 전체 게시글 조회 (페이징 + 검색) -->
     <select id="findAll" resultType="BoardDto" parameterType="PageDto">
-        SELECT id,writer,title,content,regdate,hit, password
+        SELECT id, writer, title, content, regdate, hit, password, secretValue
         FROM board
-        <include refid="searchWhere"></include>
-        ORDER BY ID DESC
+        <include refid="searchWhere"/>
+        ORDER BY id DESC
         OFFSET #{offset} ROWS FETCH NEXT #{size} ROWS ONLY
     </select>
+
+    <!-- ID로 게시글 조회 -->
     <select id="findById" resultType="BoardDto" parameterType="int">
-        select * from board where id = #{id}
+        SELECT * FROM board WHERE id = #{id}
     </select>
-    <delete id="deleteBoard" parameterType="BoardDto">
-        delete from board where id = #{id} and password = #{password}
-    </delete>
-    <select id="totalBoard" parameterType="PageDto" resultType="int">
-        SELECT count(*) AS total FROM board
-        <include refid="searchWhere"></include>
-    </select>
-    <select id="search" parameterType="string" resultType="BoardDto">
-        <!-- SELECT * FROM board WHERE title LIKE '%'||#{keyword}||'%'-->
-        <!-- 컬럼명은 #처리 안된다.-->
-        SELECT * FROM board
-        <where>
-            <choose>
-                <when test="type=='title'">
-                    title LIKE CONCAT(CONCAT('%',#{keyword}),'%')
-                </when>
-                <when test="type=='writer'">
-                    writer LIKE CONCAT(CONCAT('%',#{keyword}),'%')
-                </when>
-                <when test="type=='content'">
-                    content LIKE CONCAT(CONCAT('%',#{keyword}),'%')
-                </when>
-            </choose>
-        </where>
-    </select>
+
+    <!-- 이전 글 조회 -->
     <select id="findPrev" parameterType="int" resultType="BoardDto">
         <![CDATA[
             SELECT * FROM board WHERE id < #{id}
-            ORDER BY id desc
+            ORDER BY id DESC
             FETCH FIRST 1 ROWS ONLY
         ]]>
     </select>
+
+    <!-- 다음 글 조회 -->
     <select id="findNext" parameterType="int" resultType="BoardDto">
         <![CDATA[
             SELECT * FROM board WHERE id > #{id}
-            ORDER BY id asc
+            ORDER BY id ASC
             FETCH FIRST 1 ROWS ONLY
         ]]>
     </select>
+
+    <!-- 게시글 삭제 -->
+    <delete id="deleteBoard" parameterType="BoardDto">
+        DELETE FROM board WHERE id = #{id} AND password = #{password}
+    </delete>
+
+    <!-- 전체 게시글 수 조회 (검색 포함) -->
+    <select id="totalBoard" parameterType="PageDto" resultType="int">
+        SELECT COUNT(*) AS total FROM board
+        <include refid="searchWhere"/>
+    </select>
+
+    <!-- 게시글 검색 -->
+    <select id="search" parameterType="PageDto" resultType="BoardDto">
+        SELECT id, writer, title, content, regdate, hit, password, secretValue
+        FROM board
+        <include refid="searchWhere"/>
+        ORDER BY id DESC
+    </select>
+
 </mapper>
