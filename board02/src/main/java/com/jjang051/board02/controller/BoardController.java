@@ -87,29 +87,60 @@ public class BoardController {
         return "board/write";
     }
     @PostMapping("/write")
-    public String writeProcess(@Valid BoardDto boardDto, BindingResult bindingResult, Model model) {
+    public String writeProcess(@Valid BoardDto boardDto, BindingResult bindingResult, Model model, HttpSession session) {
         if (bindingResult.hasErrors()) {
             return "board/write";
         }
-        System.out.println(boardDto);
+
+        // 체크박스 처리: 체크 안 했으면 공개글
+        if (boardDto.getSecretValue() == null) {
+            boardDto.setSecretValue("N");
+        }
+
+        // 로그인 사용자 이름과 작성자 이름 동기화
+        MemberDto loginUser = (MemberDto) session.getAttribute("loggedMember");
+        if (loginUser != null) {
+            boardDto.setWriter(loginUser.getUserID());
+        }
+
         int result = boardDao.writeBoard(boardDto);
         if(result > 0) {
             return "redirect:/board/list";
         }
+
         return "board/write";
     }
+
     @GetMapping("/{id}/detail")
-    public String write(@PathVariable("id") int id, Model model) {
-        
-        // 수정하는 프로젝트
+    public String detail(@PathVariable("id") int id, Model model, HttpSession session) {
         BoardDto boardDto = boardDao.findById(id);
+        if(boardDto == null) {
+            model.addAttribute("error", "존재하지 않는 글입니다.");
+            return "board/error";
+        }
+
         BoardDto prevBoardDto = boardDao.findPrev(id);
         BoardDto nextBoardDto = boardDao.findNext(id);
+
+        MemberDto loginUser = (MemberDto) session.getAttribute("loggedMember");
+
+        // 비밀글 접근 제한
+        boolean isSecret = "Y".equals(boardDto.getSecretValue());
+        boolean isWriter = loginUser != null && loginUser.getUserID().equals(boardDto.getWriter());
+
+        if (isSecret && !isWriter) {
+            model.addAttribute("error", "이 글은 작성자만 볼 수 있습니다.");
+            return "board/error";
+        }
+
+        // boardDto와 인접글 DTO 추가
         model.addAttribute("boardDto", boardDto);
         model.addAttribute("prevBoardDto", prevBoardDto);
         model.addAttribute("nextBoardDto", nextBoardDto);
+
         return "board/detail";
     }
+
     @PostMapping("/delete")
     @ResponseBody
     public Map<String, Boolean> delete(@RequestBody BoardDto boardDto) {

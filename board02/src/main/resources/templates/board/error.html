@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head::head('접근 불가')}"></head>
+<body>
+<header th:replace="~{fragments/header}"></header>
+
+<div class="max-w-xl mx-auto mt-20 text-center">
+    <h2 class="text-2xl font-bold mb-4">접근 불가</h2>
+    <p th:text="${error}">이 글은 작성자만 볼 수 있습니다.</p>
+    <a href="/board/list" class="btn btn-primary mt-6">목록으로 돌아가기</a>
+</div>
+
+<div th:replace="~{fragments/footer::footer-sns}"></div>
+</body>
+</html>

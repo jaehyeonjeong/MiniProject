@@ -19,4 +19,12 @@ public class BoardDto {
     private LocalDateTime regdate;
     private int hit;
     private String password;
+    private String secretValue;  // 'Y' or 'N'
+
+    public String getSecret() { return secretValue; }
+    public void setSecret(String secretValue) { this.secretValue = secretValue; }
+
+    public String getWriter() { return writer; }
+    public void setWriter(String writer) { this.writer = writer; }
+
 }
