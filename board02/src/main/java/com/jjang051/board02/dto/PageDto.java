@@ -32,4 +32,8 @@ public class PageDto {
         int endPage = getStartPage(blockSize)+blockSize - 1;
         return Math.min(endPage, totalPages);
     }
+    // 주영추가 : 페이지 넘길 때 10페이지씩 넘어가도록
+    public int getOffset(){
+        return (page-1)*size;
+    }
 }
