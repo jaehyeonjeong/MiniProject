@@ -80,4 +80,14 @@
         ORDER BY id DESC
     </select>
 
+<!--    정재현 Mapper 추가 : 비밀글 비밀번호 내용 추가 25-10-22 11:57 -->
+    <select id="secretPW" parameterType="BoardDto" resultType="String">
+        SELECT secretpw
+        FROM board
+        WHERE id = #{id}
+        AND secretValue = #{secretValue}
+    </select>
+
+
+
 </mapper>

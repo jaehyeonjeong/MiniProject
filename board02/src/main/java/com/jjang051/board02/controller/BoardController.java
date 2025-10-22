@@ -138,6 +138,9 @@ public class BoardController {
         model.addAttribute("prevBoardDto", prevBoardDto);
         model.addAttribute("nextBoardDto", nextBoardDto);
 
+        model.addAttribute("secretPW", boardDto);
+        System.out.println("detail : boardDto==="+boardDto.getSecretPW());
+
         return "board/detail";
     }
 
