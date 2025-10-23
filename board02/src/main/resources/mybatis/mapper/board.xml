@@ -109,7 +109,11 @@
         JOIN member m ON b.userid = m.userid
         where m.userid = #{userID}
         ORDER BY b.id DESC
-        OFFSET #{currentPage} ROWS FETCH NEXT #{size} ROWS ONLY
+        OFFSET #{offset} ROWS FETCH NEXT #{size} ROWS ONLY
     </select>
+    <select id="countUserPosts" resultType="int" parameterType="string">
+        SELECT COUNT(*) FROM board WHERE userID = #{userID}
+    </select>
+
 
 </mapper>
