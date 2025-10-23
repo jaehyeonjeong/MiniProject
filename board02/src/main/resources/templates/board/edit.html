@@ -106,34 +106,24 @@
     <script th:inline="javascript">
         const confirmDelete = document.getElementById('confirmDelete');
         const deletePassword = document.getElementById('deletePassword');
-        const postId = /*[[${boardDto.id}]]*/ 0;
+        const idx = /*[[${boardDto.id}]]*/ 0;
 
-        confirmDelete.addEventListener('click', async () => {
+        confirmDelete.addEventListener("click", async () => {
             const sendPassword = deletePassword.value;
-
-            if (!sendPassword) {
-                alert("비밀번호를 입력하세요.");
-                return;
-            }
-
             const res = await fetch("/board/delete", {
                 headers: {"Content-Type": "application/json"},
                 method: "post",
-                body: JSON.stringify({password: sendPassword, id: postId})
+                body: JSON.stringify({password: sendPassword, id: idx})
             });
-
             const data = await res.json();
             if (data.success) {
-                alert("삭제되었습니다.");
+                alert("데이터가 삭제 되었습니다.")
                 location.href = "/board/list";
             } else {
-                alert("비밀번호가 올바르지 않습니다.");
+                alert("비밀번호를 확인해주세요");
             }
         });
     </script>
-
-
-
 </form>
 
 <div th:replace="~{fragments/footer::footer-sns}"></div>

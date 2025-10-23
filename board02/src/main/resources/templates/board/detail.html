@@ -82,25 +82,5 @@
 
 <div th:replace="~{fragments/footer::footer-sns}"></div>
 
-<script th:inline="javascript">
-    const btnDelete = document.querySelector("#btn-delete");
-    const password = document.querySelector("#password");
-    const idx = /*[[${boardDto.id}]]*/ 0;
-
-    btnDelete.addEventListener("click", async () => {
-        const sendPassword = password.value;
-        const res = await fetch("/board/delete", {
-            headers: {"Content-Type": "application/json"},
-            method: "post",
-            body: JSON.stringify({password: sendPassword, id: idx})
-        });
-        const data = await res.json();
-        if (data.success) {
-            location.href = "/board/list";
-        } else {
-            alert("비밀번호를 확인해주세요");
-        }
-    });
-</script>
 </body>
 </html>
