@@ -191,7 +191,7 @@ public class BoardController {
         return "board/edit";
     }
     @PostMapping("/{id}/edit")
-    public String editProcess(@Valid@ModelAttribute BoardDto boardDto,
+    public String editProcess(@ModelAttribute BoardDto boardDto,
                               BindingResult bindingResult,
                               Model model,
                               HttpSession session,
@@ -199,7 +199,6 @@ public class BoardController {
 
         // 제목,내용,비밀번호 입력 안하거나 규격에 맞지 않을 경우 메세지 출력
         if (bindingResult.hasErrors()) {
-            model.addAttribute("msg", true);
             return "board/edit";
         }
 

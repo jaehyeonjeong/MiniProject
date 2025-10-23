@@ -59,9 +59,6 @@
             <span class="label-text font-bold">비밀글PW</span>
         </label>
         <input type="password" th:field="*{secretPW}" placeholder="비밀번호 입력" class="input input-bordered w-full" />
-        <div th:if="${#fields.hasErrors('secretPW')}"
-             th:errors="*{secretPW}"
-             class="text-error text-sm mt-1"></div>
     </div>
 
     <script>
