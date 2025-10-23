@@ -104,18 +104,16 @@ SET USERID = 'song'
 WHERE ID = 1523;
 
 
-ALTER TABLE copy_board
-    ADD CONSTRAINT fk_copy_board_userid
-        FOREIGN KEY(userid)
-            REFERENCES member(userid);
-
-
-
 --member 테이블 userid에 unique 추가로 동일한 아이디의 회원가입 방지 추가
 --member 테이블의 userid는 writer_id가 아니라 회원가입에서 사용된 real_id라고 테이블에 값 출력할 때 보이게 설정
 --copy_board 테이블에서 userid가 writer_id라고 보이게 변경
 ALTER TABLE member
     ADD CONSTRAINT member_userid_unq UNIQUE (userid);
+
+ALTER TABLE copy_board
+    ADD CONSTRAINT fk_copy_board_userid
+        FOREIGN KEY(userid)
+            REFERENCES member(userid);
 
 SELECT
     b.id,

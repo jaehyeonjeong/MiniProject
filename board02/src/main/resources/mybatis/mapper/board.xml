@@ -97,17 +97,17 @@
     <select id="findAllUserID" resultType="BoardWithMemberDto" parameterType="string">
         SELECT
         b.id,
-        b.userid,
+<!--        b.userid AS writer_id,-->
         b.title,
         b.content,
         b.regdate,
         b.hit,
         b.secretValue,
-        m.userid   AS writer_id,
+        m.userid AS real_id,
         m.username AS writer_name
-        FROM copy_board b
+        FROM board b
         JOIN member m ON b.userid = m.userid
-        where b.userid = #{userID}
+        where m.userid = #{userID}
         ORDER BY b.id DESC
     </select>
 

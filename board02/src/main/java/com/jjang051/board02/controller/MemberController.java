@@ -100,9 +100,7 @@ public class MemberController {
                        HttpSession session) {
         //model.addAttribute("loginDto", new LoginDto());
         // 서로 다른 컨트롤러에서 board 데이터를 가져오는 방법???
-        PageDto pageDto = new PageDto();
-        pageDto.setPage(1);
-        pageDto.setSize(10);
+
 //        List<BoardDto> boardList = boardDao.findAll(pageDto);
         // 로그인 시 로그인 userid 정보를 취득하기 위한 코드
         MemberDto memberDto = (MemberDto) session.getAttribute("loggedMember");

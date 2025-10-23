@@ -13,12 +13,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class BoardWithMemberDto {
     private int id;
-    private String userid;
+    private String writer_id;
     private String title;
     private String content;
     private LocalDateTime regdate;
     private int hit;
     private String secretValue;
-    private String writer_id;
+    private String real_id;
     private String writer_name;
 }
