@@ -44,23 +44,22 @@
             <!-- 페이징 -->
             <!-- 페이징 -->
             <nav class="my-5 flex justify-center">
-                <div class="join">
-                    <a href="" class="join-item btn"
-                       th:href="@{../member/info}">이전</a>
-
-<!--                    <th:block th:each="item:${#numbers.sequence(responsePageDto.getStartPage(5),responsePageDto.getEndPage(5))}">-->
-<!--                        <a href="" class="join-item btn"-->
-<!--                           th:text="${item}"-->
-<!--                           th:classappend="${item == responsePageDto.page} ? 'btn-primary'"-->
-<!--                           th:href="@{../board/list(-->
-<!--                           page=${item},-->
-<!--                           size=${responsePageDto.size},-->
-<!--                           keyword=${responsePageDto.keyword},-->
-<!--                           type=${responsePageDto.type})}"></a>-->
-<!--                    </th:block>-->
-
-                    <a href="" class="join-item btn"
-                       th:href="@{../member/info}">다음</a>
+                <div class="mt-4 flex justify-center items-center gap-2">
+                    <form th:action="@{/member/info}" method="get">
+                        <input type="hidden" name="page" th:value="${pageDto.page}">
+                        <button class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 transition"
+                                type="submit" name="move" value="-10"
+                                th:disabled="${pageDto.page <= 1}">
+                            이전
+                        </button>
+                        <span class="mx-2 text-sm text-gray-700"
+                              th:text="'페이지 ' + ${pageDto.page} + ' / ' + ${totalPages}"></span>
+                        <button class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 transition"
+                                type="submit" name="move" value="10"
+                                th:disabled="${pageDto.page >= totalPages}">
+                            다음
+                        </button>
+                    </form>
                 </div>
             </nav>
 <!--            <div>-->

@@ -98,36 +98,51 @@ public class MemberController {
     @GetMapping("/info")
     public String info(Model model,
                        HttpSession session,
-                       @ModelAttribute("pageDto")  PageDto pageDto) {
+                       @ModelAttribute("pageDto") PageDto pageDto,
+                       @RequestParam(value = "move", required = false, defaultValue = "0") int move) {
 
-        //model.addAttribute("loginDto", new LoginDto());
-        // 서로 다른 컨트롤러에서 board 데이터를 가져오는 방법???
-
-//        List<BoardDto> boardList = boardDao.findAll(pageDto);
-        // 로그인 시 로그인 userid 정보를 취득하기 위한 코드
         MemberDto memberDto = (MemberDto) session.getAttribute("loggedMember");
+        if (memberDto == null) {
+            return "redirect:/member/login";
+        }
+
         String memberUserID = memberDto.getUserID();
-        System.out.println("memberUserID==="+memberUserID);
 
+        // ✅ 기본 페이지 및 크기 설정
+        int currentPage = pageDto.getPage() + move;
+        if (currentPage < 1) currentPage = 1;
+        int size = (pageDto.getSize() == 0) ? 10 : pageDto.getSize();
+
+        // ✅ 전체 게시글 개수 가져오기 (총 페이지 계산)
+        int totalBoard = boardDao.countUserPosts(memberUserID);
+        int totalPages = (int) Math.ceil((double) totalBoard / size);
+        if (currentPage > totalPages && totalPages > 0) currentPage = totalPages;
+
+        pageDto.setPage(currentPage);
+        pageDto.setSize(size);
+
+        // ✅ 쿼리에 전달할 맵 구성
         Map<String, String> map = new HashMap<>();
-        map.put("userID",  memberUserID);
 
-        // 페이징 데이터 추가 구문
-        System.out.println("pageDto.getPage == " + pageDto.getPage());
-        System.out.println("pageDto.getSize == " + pageDto.getSize());
-        pageDto.setPage(11);
-        pageDto.setSize(10);
+        int offset = pageDto.getOffset();
 
-        map.put("currentPage", String.valueOf(pageDto.getPage()));
+
+        map.put("userID", memberUserID);
+        map.put("offset", String.valueOf(offset));
         map.put("size", String.valueOf(pageDto.getSize()));
-//        List<BoardWithMemberDto> boardUserIDList = boardDao.findAllUserID(memberUserID);
-        List<BoardWithMemberDto> boardUserIDList = boardDao.findAllUserID(map);
-        System.out.println("boardUserIDList==="+boardUserIDList);
-        // 두개 이상의 파라미터를 넣기위한 데이터 포멧
 
+        // ✅ 해당 페이지 게시글 조회
+        List<BoardWithMemberDto> boardUserIDList = boardDao.findAllUserID(map);
+
+        // ✅ 모델에 담기
         model.addAttribute("boardUserIDList", boardUserIDList);
+        model.addAttribute("pageDto", pageDto);
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("totalPages", totalPages);
+
         return "member/info";
     }
+
     @GetMapping("/logout")
     public String logout(Model model, HttpSession session) {
         session.invalidate();

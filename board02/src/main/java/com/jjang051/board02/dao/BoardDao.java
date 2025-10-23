@@ -32,4 +32,6 @@ public interface BoardDao {
 
     // mapper로 join한 board리스트 함수 생성
     List<BoardWithMemberDto> findAllUserID(Map<String, String> map);
+
+    int countUserPosts(String memberUserID);
 }
