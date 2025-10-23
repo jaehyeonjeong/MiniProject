@@ -110,16 +110,23 @@ ALTER TABLE copy_board
             REFERENCES member(userid);
 
 
+
+--member 테이블 userid에 unique 추가로 동일한 아이디의 회원가입 방지 추가
+--member 테이블의 userid는 writer_id가 아니라 회원가입에서 사용된 real_id라고 테이블에 값 출력할 때 보이게 설정
+--copy_board 테이블에서 userid가 writer_id라고 보이게 변경
+ALTER TABLE member
+    ADD CONSTRAINT member_userid_unq UNIQUE (userid);
+
 SELECT
     b.id,
-    b.userid,
+    b.userid AS writer_id,
     b.title,
     b.content,
     b.regdate,
     b.hit,
-    b.secretValue,
-    m.userid   AS writer_id,
+    m.userid AS real_id,
     m.username AS writer_name
 FROM copy_board b
          JOIN member m ON b.userid = m.userid
+where m.userid = 'song'
 ORDER BY b.id DESC;
