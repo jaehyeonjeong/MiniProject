@@ -25,7 +25,8 @@
                 <tbody>
                 <tr th:each="item:${boardUserIDList}" class="hover:bg-gray-50">
                     <td class="text-center">
-                        <a th:href="@{../board/{id}/detail(id=${item.id})}" class="link link-primary" th:text="${item.id}"></a>
+                        <a th:href="@{../board/{id}/detail(id=${item.id})}" class="link link-primary"
+                           th:text="${item.id}"></a>
                     </td>
                     <td>
                         <a th:href="@{../board/{id}/detail(id=${item.id})}" class="link link-hover">
@@ -38,7 +39,37 @@
                     <td class="text-center" th:text="${item.hit}"></td>
                 </tr>
                 </tbody>
+
             </table>
+            <!-- 페이징 -->
+            <!-- 페이징 -->
+            <nav class="my-5 flex justify-center">
+                <div class="join">
+                    <a href="" class="join-item btn"
+                       th:href="@{../member/info}">이전</a>
+
+<!--                    <th:block th:each="item:${#numbers.sequence(responsePageDto.getStartPage(5),responsePageDto.getEndPage(5))}">-->
+<!--                        <a href="" class="join-item btn"-->
+<!--                           th:text="${item}"-->
+<!--                           th:classappend="${item == responsePageDto.page} ? 'btn-primary'"-->
+<!--                           th:href="@{../board/list(-->
+<!--                           page=${item},-->
+<!--                           size=${responsePageDto.size},-->
+<!--                           keyword=${responsePageDto.keyword},-->
+<!--                           type=${responsePageDto.type})}"></a>-->
+<!--                    </th:block>-->
+
+                    <a href="" class="join-item btn"
+                       th:href="@{../member/info}">다음</a>
+                </div>
+            </nav>
+<!--            <div>-->
+<!--                <a th:href="@{../member/info(page=${currentPage - size})}">이전</a>-->
+<!--            </div>-->
+
+<!--            <div>-->
+<!--                <a th:href="@{../member/info(page=${currentPage + size})}">다음</a>-->
+<!--            </div>-->
         </div>
     </section>
 
