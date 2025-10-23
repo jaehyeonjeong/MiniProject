@@ -2,10 +2,7 @@ package com.jjang051.board02.controller;
 
 import com.jjang051.board02.dao.BoardDao;
 import com.jjang051.board02.dao.MemberDao;
-import com.jjang051.board02.dto.BoardDto;
-import com.jjang051.board02.dto.LoginDto;
-import com.jjang051.board02.dto.MemberDto;
-import com.jjang051.board02.dto.PageDto;
+import com.jjang051.board02.dto.*;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -99,14 +96,22 @@ public class MemberController {
         return "redirect:/";
     }
     @GetMapping("/info")
-    public String info(Model model) {
+    public String info(Model model,
+                       HttpSession session) {
         //model.addAttribute("loginDto", new LoginDto());
         // 서로 다른 컨트롤러에서 board 데이터를 가져오는 방법???
         PageDto pageDto = new PageDto();
         pageDto.setPage(1);
         pageDto.setSize(10);
-        List<BoardDto> boardList = boardDao.findAll(pageDto);
-        model.addAttribute("boardList", boardList);
+//        List<BoardDto> boardList = boardDao.findAll(pageDto);
+        // 로그인 시 로그인 userid 정보를 취득하기 위한 코드
+        MemberDto memberDto = (MemberDto) session.getAttribute("loggedMember");
+        String memberUserID = memberDto.getUserID();
+        System.out.println("memberUserID==="+memberUserID);
+
+        List<BoardWithMemberDto> boardUserIDList = boardDao.findAllUserID(memberUserID);
+        System.out.println("boardUserIDList==="+boardUserIDList);
+        model.addAttribute("boardUserIDList", boardUserIDList);
         return "member/info";
     }
     @GetMapping("/logout")

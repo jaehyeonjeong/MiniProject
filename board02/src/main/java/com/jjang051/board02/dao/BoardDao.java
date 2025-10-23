@@ -1,6 +1,7 @@
 package com.jjang051.board02.dao;
 
 import com.jjang051.board02.dto.BoardDto;
+import com.jjang051.board02.dto.BoardWithMemberDto;
 import com.jjang051.board02.dto.PageDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -27,4 +28,7 @@ public interface BoardDao {
 
     // 비밀글 비번 조회(xml에 있음)
     String secretPW(BoardDto boardDto);
+
+    // mapper로 join한 board리스트 함수 생성
+    List<BoardWithMemberDto> findAllUserID(String userID);
 }

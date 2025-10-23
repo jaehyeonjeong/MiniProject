@@ -19,7 +19,7 @@
 
         <!-- 테이블 바디 -->
         <tbody>
-        <tr th:each="item:${boardList}">
+        <tr th:each="item:${boardUserIDList}">
             <td>
                 <a th:href="@{../board/{id}/detail(id=${item.id})}" class="link link-primary" th:text="${item.id}"></a>
             </td>
@@ -29,7 +29,7 @@
                     <span th:if="${item.secretValue=='Y'}" class="text-red-500 font-bold"> 🔒</span>
                 </a>
             </td>
-            <td th:text="${item.writer}"></td>
+            <td th:text="${item.writer_name}"></td>
             <td th:text="${item.regdate}"></td>
             <td th:text="${item.hit}"></td>
         </tr>
