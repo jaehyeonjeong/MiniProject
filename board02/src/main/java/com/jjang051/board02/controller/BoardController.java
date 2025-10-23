@@ -92,6 +92,7 @@ public class BoardController {
                                HttpSession session,
                                @RequestParam String secretPW) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("msg", true);
             return "board/write";
         }
 
@@ -190,14 +191,15 @@ public class BoardController {
         return "board/edit";
     }
     @PostMapping("/{id}/edit")
-    public String editProcess(@ModelAttribute BoardDto boardDto,
+    public String editProcess(@Valid@ModelAttribute BoardDto boardDto,
                               BindingResult bindingResult,
                               Model model,
                               HttpSession session,
                               @RequestParam String secretPW) {
 
-        // 에러발생시
+        // 제목,내용,비밀번호 입력 안하거나 규격에 맞지 않을 경우 메세지 출력
         if (bindingResult.hasErrors()) {
+            model.addAttribute("msg", true);
             return "board/edit";
         }
 
