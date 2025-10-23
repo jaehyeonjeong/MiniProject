@@ -94,4 +94,21 @@
         UPDATE board SET title=#{title}, content=#{content}, writer=#{writer} WHERE id = #{id}
     </update>
 
+    <select id="findAllUserID" resultType="BoardWithMemberDto" parameterType="string">
+        SELECT
+        b.id,
+<!--        b.userid AS writer_id,-->
+        b.title,
+        b.content,
+        b.regdate,
+        b.hit,
+        b.secretValue,
+        m.userid AS real_id,
+        m.username AS writer_name
+        FROM board b
+        JOIN member m ON b.userid = m.userid
+        where m.userid = #{userID}
+        ORDER BY b.id DESC
+    </select>
+
 </mapper>
