@@ -140,7 +140,7 @@ public class BoardController {
 
             if (!isWriter && !pwCorrect) {
                 model.addAttribute("boardDto", boardDto);
-                model.addAttribute("error", "비밀글입니다. 비밀번호를 입력해주세요.");
+                model.addAttribute("error", "비밀번호를 입력해주세요.");
                 model.addAttribute("prevBoardDto", prevBoardDto);
                 model.addAttribute("nextBoardDto", nextBoardDto);
                 return "board/secret-check"; // 비밀번호 입력 페이지

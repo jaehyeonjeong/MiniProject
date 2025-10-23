@@ -2,7 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <header class="navbar bg-base-100 shadow-md" th:fragment="header">
     <div class="navbar-start">
-        <h1 class="text-2xl font-bold">MyBlog</h1>
+        <a th:href="@{/}" class="flex items-center">
+            <h1 class="text-2xl font-bold">MyBlog</h1>
+        </a>
     </div>
     <div class="navbar-center hidden lg:flex">
         <ul tabindex="-1"

@@ -3,6 +3,7 @@ package com.jjang051.board02.controller;
 import com.jjang051.board02.dao.BoardDao;
 import com.jjang051.board02.dao.MemberDao;
 import com.jjang051.board02.dto.*;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -74,9 +75,14 @@ public class MemberController {
         return map;
     }
 
+    // 리스트에서 로그인 시 리스트로 가게 수정
     @GetMapping("/login")
-    public String login(Model model) {
+    public String loginForm(Model model, HttpSession session, HttpServletRequest request) {
         model.addAttribute("loginDto", new LoginDto());
+        String referer = request.getHeader("Referer");
+        if (referer != null && !referer.contains("/login")) {
+            session.setAttribute("prevPage", referer);
+        }
         return "member/login";
     }
     @PostMapping("/login")
@@ -88,13 +94,20 @@ public class MemberController {
         if(bindingResult.hasErrors()){
             return "member/login";
         }
-        MemberDto  loggedMemberDto = memberDao.login(loginDto);
-        //redirect에서는 유효하지 않다...
-        //pageContext, request, (session, application 번역 변수로 인식된다.)
+
+        MemberDto loggedMemberDto = memberDao.login(loginDto);
         session.setAttribute("loggedMember", loggedMemberDto);
-        //session은 로그아웃 하기 전까지 서버에 값을 가지고 있다.
-        return "redirect:/";
+
+        // 이전 페이지 가져오기
+        String prevPage = (String) session.getAttribute("prevPage");
+        if(prevPage != null) {
+            session.removeAttribute("prevPage"); // 사용 후 제거
+            return "redirect:" + prevPage;
+        }
+
+        return "redirect:/"; // 이전 페이지 없으면 루트로
     }
+
     @GetMapping("/info")
     public String info(Model model,
                        HttpSession session) {
