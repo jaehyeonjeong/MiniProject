@@ -115,6 +115,8 @@ public class MemberController {
         // 페이징 데이터 추가 구문
         System.out.println("pageDto.getPage == " + pageDto.getPage());
         System.out.println("pageDto.getSize == " + pageDto.getSize());
+        pageDto.setPage(11);
+        pageDto.setSize(10);
 
         map.put("currentPage", String.valueOf(pageDto.getPage()));
         map.put("size", String.valueOf(pageDto.getSize()));
