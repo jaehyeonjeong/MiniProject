@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface BoardDao {
@@ -30,5 +31,5 @@ public interface BoardDao {
     String secretPW(BoardDto boardDto);
 
     // mapper로 join한 board리스트 함수 생성
-    List<BoardWithMemberDto> findAllUserID(String userID);
+    List<BoardWithMemberDto> findAllUserID(Map<String, String> map);
 }

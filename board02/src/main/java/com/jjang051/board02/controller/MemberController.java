@@ -97,7 +97,9 @@ public class MemberController {
     }
     @GetMapping("/info")
     public String info(Model model,
-                       HttpSession session) {
+                       HttpSession session,
+                       @ModelAttribute("pageDto")  PageDto pageDto) {
+
         //model.addAttribute("loginDto", new LoginDto());
         // 서로 다른 컨트롤러에서 board 데이터를 가져오는 방법???
 
@@ -107,8 +109,20 @@ public class MemberController {
         String memberUserID = memberDto.getUserID();
         System.out.println("memberUserID==="+memberUserID);
 
-        List<BoardWithMemberDto> boardUserIDList = boardDao.findAllUserID(memberUserID);
+        Map<String, String> map = new HashMap<>();
+        map.put("userID",  memberUserID);
+
+        // 페이징 데이터 추가 구문
+        System.out.println("pageDto.getPage == " + pageDto.getPage());
+        System.out.println("pageDto.getSize == " + pageDto.getSize());
+
+        map.put("currentPage", String.valueOf(pageDto.getPage()));
+        map.put("size", String.valueOf(pageDto.getSize()));
+//        List<BoardWithMemberDto> boardUserIDList = boardDao.findAllUserID(memberUserID);
+        List<BoardWithMemberDto> boardUserIDList = boardDao.findAllUserID(map);
         System.out.println("boardUserIDList==="+boardUserIDList);
+        // 두개 이상의 파라미터를 넣기위한 데이터 포멧
+
         model.addAttribute("boardUserIDList", boardUserIDList);
         return "member/info";
     }
