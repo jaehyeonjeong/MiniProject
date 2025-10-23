@@ -1,47 +1,63 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/head::head('회원가입')}"></head>
-<body>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head::head(title='회원가입')}"></head>
+<body class="bg-gray-50">
+
 <header th:replace="~{fragments/header}"></header>
-<!-- 제목 -->
-<div class="max-w-2xl mx-auto space-y-4">
-    <table class="table table-zebra w-full border border-base-300">
-        <!-- 테이블 헤더 -->
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>제목</th>
-            <th>글쓴이</th>
-            <th>날짜</th>
-            <th>조회수</th>
-        </tr>
-        </thead>
 
-        <!-- 테이블 바디 -->
-        <tbody>
-        <tr th:each="item:${boardUserIDList}">
-            <td>
-                <a th:href="@{../board/{id}/detail(id=${item.id})}" class="link link-primary" th:text="${item.id}"></a>
-            </td>
-            <td>
-                <a th:href="@{../board/{id}/detail(id=${item.id})}" class="link link-hover">
-                    <span th:text="${item.title}"></span>
-                    <span th:if="${item.secretValue=='Y'}" class="text-red-500 font-bold"> 🔒</span>
-                </a>
-            </td>
-            <td th:text="${item.writer_name}"></td>
-            <td th:text="${item.regdate}"></td>
-            <td th:text="${item.hit}"></td>
-        </tr>
-        </tbody>
-    </table>
+<!-- 메인 컨테이너: 좌우 여백 확보 -->
+<div class="max-w-5xl mx-auto mt-10 px-4 space-y-12">
 
-    <h1 class="text-3xl my-10">회원가입</h1>
-    <div th:text="${session.loggedMember.userID}">장성호</div>
-    <div th:text="${session.loggedMember.userName}">장성호</div>
-    <div th:text="${session.loggedMember.userEmail}">장성호</div>
-    <div><a th:href="@{../member/delete}" href="" class="btn btn-primary">회원탈퇴</a>
-        <a href="" class="btn btn-primary">정보수정</a></div>
+    <!-- 내가 쓴 글 섹션 -->
+    <section class="bg-white shadow-xl rounded-xl p-8">
+        <h2 class="text-2xl font-bold border-b-2 border-gray-200 pb-3 mb-6">내가 쓴 글</h2>
+        <div class="overflow-x-auto">
+            <table class="table table-zebra w-full border border-base-300 rounded-lg shadow">
+                <thead class="bg-gray-100">
+                <tr>
+                    <th class="text-center">ID</th>
+                    <th>제목</th>
+                    <th>글쓴이</th>
+                    <th class="text-center">날짜</th>
+                    <th class="text-center">조회수</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item:${boardUserIDList}" class="hover:bg-gray-50">
+                    <td class="text-center">
+                        <a th:href="@{../board/{id}/detail(id=${item.id})}" class="link link-primary" th:text="${item.id}"></a>
+                    </td>
+                    <td>
+                        <a th:href="@{../board/{id}/detail(id=${item.id})}" class="link link-hover">
+                            <span th:text="${item.title}"></span>
+                            <span th:if="${item.secretValue=='Y'}" class="text-red-500 font-bold"> 🔒</span>
+                        </a>
+                    </td>
+                    <td th:text="${item.writer_name}"></td>
+                    <td class="text-center" th:text="${item.regdate}"></td>
+                    <td class="text-center" th:text="${item.hit}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- 회원 정보 섹션 -->
+    <section class="bg-white shadow-xl rounded-xl p-8">
+        <h2 class="text-2xl font-bold border-b-2 border-gray-200 pb-3 mb-6">회원 정보</h2>
+        <div class="flex flex-col gap-3 text-lg">
+            <div><span class="font-semibold">아이디:</span> <span th:text="${session.loggedMember.userID}"></span></div>
+            <div><span class="font-semibold">이름:</span> <span th:text="${session.loggedMember.userName}"></span></div>
+            <div><span class="font-semibold">이메일:</span> <span th:text="${session.loggedMember.userEmail}"></span></div>
+        </div>
+
+        <!-- 버튼 그룹 -->
+        <div class="flex gap-4 justify-center mt-6">
+            <a th:href="@{../member/edit}" class="btn btn-primary flex-1 max-w-xs text-lg">정보수정</a>
+            <a th:href="@{../member/delete}" class="btn btn-error flex-1 max-w-xs text-lg">회원탈퇴</a>
+        </div>
+    </section>
 </div>
+<div th:replace="~{fragments/footer::footer-sns}"></div>
 </body>
 </html>
