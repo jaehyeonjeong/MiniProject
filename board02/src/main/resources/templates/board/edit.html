@@ -105,6 +105,9 @@
     </dialog>
 
     <script th:inline="javascript">
+        setTimeout(function() {
+            console.log('delete 진행중...');
+        }, 3000);
         const confirmDelete = document.getElementById('confirmDelete');
         const deletePassword = document.getElementById('deletePassword');
         const postId = /*[[${boardDto.id}]]*/ 0;
