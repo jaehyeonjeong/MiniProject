@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import jakarta.servlet.http.HttpServletResponse;
 
 
@@ -36,12 +37,12 @@ public class BoardController {
         response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
         response.setHeader("Pragma", "no-cache");
         response.setDateHeader("Expires", 0);
-        int page =  pageDto.getPage();
-        int size =  pageDto.getSize();
-        int totalBoard =  boardDao.totalBoard(pageDto); //전체 게시물 수  33 /10
-        int totalPages =  (int)Math.ceil((double)totalBoard/size);
-        if(totalBoard==0) {
-            model.addAttribute("boardList",List.of());
+        int page = pageDto.getPage();
+        int size = pageDto.getSize();
+        int totalBoard = boardDao.totalBoard(pageDto); //전체 게시물 수  33 /10
+        int totalPages = (int) Math.ceil((double) totalBoard / size);
+        if (totalBoard == 0) {
+            model.addAttribute("boardList", List.of());
             PageDto responsePageDto = PageDto.builder()
                     .page(page)
                     .size(size)
@@ -52,16 +53,16 @@ public class BoardController {
                     .hasPrev(false)
                     .hasNext(false)
                     .build();
-            model.addAttribute("responsePageDto",responsePageDto);
+            model.addAttribute("responsePageDto", responsePageDto);
             return "/board/list";
         }
-        if(page < 1) {
+        if (page < 1) {
             page = 1;
-            return "redirect:/board/list?page="+page+"&size="+size;
+            return "redirect:/board/list?page=" + page + "&size=" + size;
         }  //0보다 작아지지 않게....
-        if(page > totalPages) {
+        if (page > totalPages) {
             page = totalPages;
-            return "redirect:/board/list?page="+page+"&size="+size;
+            return "redirect:/board/list?page=" + page + "&size=" + size;
         } // 마지막 보다 커지지 않게...
         List<BoardDto> boardList = boardDao.findAll(pageDto);
         model.addAttribute("boardList", boardList);
@@ -72,25 +73,26 @@ public class BoardController {
                 .type(pageDto.getType())
                 .total(totalBoard)
                 .totalPages(totalPages)
-                .hasPrev(page>1)
-                .hasNext(page<totalPages)
+                .hasPrev(page > 1)
+                .hasNext(page < totalPages)
                 .build();
 
-        model.addAttribute("responsePageDto",responsePageDto);
+        model.addAttribute("responsePageDto", responsePageDto);
         return "board/list";
     }
 
     @GetMapping("/write")
     public String write(Model model, HttpSession session) {
         //로그인한 사용자면 이름을 넣어서 넘겨주고 아니면 빈 dto내려보내기
-        MemberDto loggedMember = (MemberDto)session.getAttribute("loggedMember");
+        MemberDto loggedMember = (MemberDto) session.getAttribute("loggedMember");
         BoardDto boardDto = new BoardDto();
-        if(loggedMember!=null){
+        if (loggedMember != null) {
             boardDto.setWriter(loggedMember.getUserName());
         }
         model.addAttribute("boardDto", boardDto);
         return "board/write";
     }
+
     @PostMapping("/write")
     public String writeProcess(@Valid BoardDto boardDto,
                                BindingResult bindingResult,
@@ -121,7 +123,7 @@ public class BoardController {
         }
 
         int result = boardDao.writeBoard(boardDto);
-        if(result > 0) {
+        if (result > 0) {
             return "redirect:/board/list";
         }
 
@@ -130,7 +132,6 @@ public class BoardController {
 
     @GetMapping("/{id}/detail")
     public String detail(@PathVariable("id") int id,
-                         @RequestParam(value = "pw", required = false) String pw,
                          Model model,
                          HttpSession session) {
         BoardDto boardDto = boardDao.findById(id);
@@ -140,6 +141,10 @@ public class BoardController {
 //        MemberDto loginUser = (MemberDto) session.getAttribute("loggedMember");
 
         System.out.println("boardDto.getUserID : " + boardDto.getUserID());
+
+        String pw = (String) session.getAttribute("secretPw");
+        session.removeAttribute("secretPw"); // 보안상 제거
+        System.out.println("get detail pw === " + pw);
 
         // 비밀글 접근 제한
         if ("Y".equals(boardDto.getSecretValue())) {
@@ -162,6 +167,17 @@ public class BoardController {
         return "board/detail";
     }
 
+    @PostMapping("/{id}/detail")
+    public String detailProcess(@PathVariable("id") int id,
+                                @RequestParam("pw") String pw,
+                                HttpSession session) {
+
+        System.out.println("post detailProcess pw : " + pw);
+        session.setAttribute("secretPw", pw);
+        return "redirect:/board/" + id + "/detail";
+    }
+
+
     @PostMapping("/delete")
     @ResponseBody
     public Map<String, Object> delete(@RequestBody BoardDto boardDto) {
@@ -179,28 +195,31 @@ public class BoardController {
         }
         return map;
     }
+
     @GetMapping("/search")
     public String search(
-            @RequestParam(value = "keyword",defaultValue = "") String keyword,
-            @RequestParam(value = "type",defaultValue = "title") String type,
+            @RequestParam(value = "keyword", defaultValue = "") String keyword,
+            @RequestParam(value = "type", defaultValue = "title") String type,
             Model model) {
-        System.out.println("keyword==="+keyword);
+        System.out.println("keyword===" + keyword);
         List<BoardDto> searchList = boardDao.search(keyword, type);
         model.addAttribute("searchList", searchList);
         return "board/search-list";
     }
+
     // edit page로 넘어가는 controller
     @GetMapping("/{id}/edit")
-    public String edit(@PathVariable ("id")  int id,
-            Model model, HttpSession session) {
-        MemberDto loggedMember = (MemberDto)session.getAttribute("loggedMember");
+    public String edit(@PathVariable("id") int id,
+                       Model model, HttpSession session) {
+        MemberDto loggedMember = (MemberDto) session.getAttribute("loggedMember");
         BoardDto boardDto = boardDao.findById(id);
-        if(loggedMember!=null){
+        if (loggedMember != null) {
             boardDto.setWriter(loggedMember.getUserName());
         }
         model.addAttribute("boardDto", boardDto);
         return "board/edit";
     }
+
     @PostMapping("/{id}/edit")
     public String editProcess(@ModelAttribute BoardDto boardDto,
                               BindingResult bindingResult,
@@ -231,7 +250,7 @@ public class BoardController {
         System.out.println("boardDto.secretPW : " + boardDto.getSecretPW());
         int result = boardDao.updateBoard(boardDto);
         System.out.println("boardCtrl edit result : " + result);
-        if(result > 0) {
+        if (result > 0) {
             return "redirect:/board/list";
         }
         return "board/edit";
