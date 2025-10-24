@@ -1,5 +1,6 @@
 package com.jjang051.board02.dao;
 
+import com.jjang051.board02.dto.BoardDto;
 import com.jjang051.board02.dto.LoginDto;
 import com.jjang051.board02.dto.MemberDto;
 import jakarta.validation.Valid;
@@ -13,4 +14,6 @@ public interface MemberDao {
     int existsEmail(String userEmail);
     MemberDto login(LoginDto loginDto);
     int deleteMember(LoginDto loginDto);
+    MemberDto findById(int id);
+    int updateBoard(MemberDto memberDto);
 }

@@ -31,4 +31,18 @@
     <delete id="deleteMember" parameterType="LoginDto">
         delete from member where userID =#{userID} and userPW = #{userPW}
     </delete>
+
+    <select id="findById" resultType="MemberDto" parameterType="int">
+        SELECT * FROM member WHERE id = #{id}
+    </select>
+
+
+    <update id="updateMember" parameterType="MemberDto">
+        UPDATE member SET
+        userID=#{userID},
+        userPW=#{userPW},
+        userName=#{userName},
+        userEmail=#{userEmail}
+        WHERE id = #{id}
+    </update>
 </mapper>

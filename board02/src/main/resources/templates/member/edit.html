@@ -6,13 +6,13 @@
 </head>
 <body>
 <h1>회원정보수정</h1>
-<form>
+<form th:action="@{/member/{id}/edit(id=${memberDto.id})}" method="post" th:object="${memberDto}">
     <div>
         <input type="hidden" name="id">
     </div>
     <div>
-        <label>ID</label>
-        <input type="text" name="userID" readonly>
+<!--        <label>ID</label>-->
+        <input type="hidden" name="userID">
     </div>
     <div>
         <label>Password</label>

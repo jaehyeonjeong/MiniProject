@@ -83,7 +83,7 @@
 
         <!-- 버튼 그룹 -->
         <div class="flex gap-4 justify-center mt-6">
-            <a th:href="@{../member/edit}" class="btn btn-primary flex-1 max-w-xs text-lg">정보수정</a>
+            <a th:href="@{../member/{id}/edit(id=${session.loggedMember.id})}" class="btn btn-primary flex-1 max-w-xs text-lg">정보수정</a>
             <a th:href="@{../member/delete}" class="btn btn-error flex-1 max-w-xs text-lg">회원탈퇴</a>
         </div>
     </section>

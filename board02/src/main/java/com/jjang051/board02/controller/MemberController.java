@@ -186,4 +186,29 @@ public class MemberController {
         model.addAttribute("error", "패스워드 확인해주세요");
         return "member/delete";
     }
+
+    // edit page로 넘어가는 controller
+    @GetMapping("/{id}/edit")
+    public String edit(@PathVariable ("id")  int id,
+                       Model model, HttpSession session) {
+        MemberDto MemberDto = memberDao.findById(id);
+        model.addAttribute("memberDto", MemberDto);
+        return "member/edit";
+    }
+    @PostMapping("/{id}/edit")
+    public String editProcess(@ModelAttribute MemberDto memberDto,
+                              BindingResult bindingResult,
+                              Model model,
+                              HttpSession session,
+                              @RequestParam String secretPW) {
+
+        // 제목,내용,비밀번호 입력 안하거나 규격에 맞지 않을 경우 메세지 출력
+
+        int result = memberDao.updateBoard(memberDto);
+        System.out.println("memberCtrl edit result : " + result);
+        if(result > 0) {
+            return "redirect:/member/info";
+        }
+        return "member/info";
+    }
 }
