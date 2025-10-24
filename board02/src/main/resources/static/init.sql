@@ -66,7 +66,27 @@ select * FROM board;
 INSERT INTO board (id, title, content, writer, regdate, hit, password, secretValue, secretPW,userid)
 VALUES (board_seq.nextval, '비밀글 제목', '비밀 내2용', '송일', SYSDATE, 0, '1234', 'Y', '5678','hong1');
 
-
+-- DB 데이터 복수 저장
+BEGIN
+FOR i IN 1..20 LOOP
+        INSERT INTO board (
+            id, title, content, writer, regdate, hit,
+            password, secretValue, secretPW, userID
+        ) VALUES (
+            board_seq.nextval,
+            '비밀글 제목' || i,
+            '비밀 내용' || i,
+            '정재현',
+            SYSDATE,
+            0,
+            '1234',
+            'Y',
+            '567811',
+            'definejae234'
+        );
+END LOOP;
+COMMIT;
+END;
 
 
 --비밀게시글 삽입 예시
