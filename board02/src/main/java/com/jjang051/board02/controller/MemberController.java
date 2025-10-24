@@ -92,6 +92,7 @@ public class MemberController {
                                Model model) {
 
         if(bindingResult.hasErrors()){
+            model.addAttribute("loginDto", loginDto);
             return "member/login";
         }
 
