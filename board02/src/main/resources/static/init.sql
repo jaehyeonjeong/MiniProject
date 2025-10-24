@@ -26,9 +26,7 @@ ALTER TABLE MEMBER
     ADD userpw varchar2(100) DEFAULT '1234'
 CONSTRAINT member_userpw_nn NOT NULL;
 
-SELECT * FROM MEMBER WHERE userid = 'jjang051' AND userpw = '1234';
-
-
+--board 테이블 만들 때
 CREATE TABLE board  (
                         id NUMBER CONSTRAINT board_id_pk PRIMARY KEY,
                         writer  varchar2(100) CONSTRAINT board_writer_nn NOT NULL,
@@ -39,33 +37,35 @@ CREATE TABLE board  (
                         password varchar2(100)
 );
 
-CREATE SEQUENCE board_seq
-    START WITH 1
-    INCREMENT BY 1
-    MAXVALUE 99999999999999
-    MINVALUE 1
-    nocycle;
-insert into board(id,title,content,writer,regdate,hit,password) values
-    (board_seq.nextval,'테스트','테스트','테스트유저',sysdate,1,'1234');
-select * FROM board;
-
-
-CREATE TABLE board (
-                       id        NUMBER PRIMARY KEY,
-                       writer    VARCHAR2(100) NOT NULL,
-                       title     VARCHAR2(3000) NOT NULL,
-                       content   VARCHAR2(3000) NOT NULL,
-                       regdate   DATE DEFAULT SYSDATE,
-                       hit       NUMBER,
-                       password  VARCHAR2(100)
-);
-
+--board 테이블에 secretValue,secretPW, userid 추가
 ALTER TABLE board
     ADD secretValue CHAR(1) DEFAULT 'N'
         CONSTRAINT board_secretValue_ck CHECK (secretValue IN ('Y', 'N'));
 
 ALTER TABLE board
     ADD secretPW VARCHAR2(100);
+
+ALTER TABLE board
+    ADD userid VARCHAR2(100);
+
+--board에 sequence 추가
+CREATE SEQUENCE board_seq
+    START WITH 1
+    INCREMENT BY 1
+    MAXVALUE 99999999999999
+    MINVALUE 1
+    nocycle;
+
+
+insert into board(id,title,content,writer,regdate,hit,password) values
+    (board_seq.nextval,'테스트','테스트','테스트유저',sysdate,1,'1234');
+
+select * FROM board;
+
+--DB에 비밀글 Data 만들기
+INSERT INTO board (id, title, content, writer, regdate, hit, password, secretValue, secretPW,userid)
+VALUES (board_seq.nextval, '비밀글 제목', '비밀 내2용', '송일', SYSDATE, 0, '1234', 'Y', '5678','hong1');
+
 
 
 
