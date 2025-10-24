@@ -231,7 +231,10 @@ public class BoardController {
         if ("Y".equals(boardDto.getSecretValue())) {
             boardDto.setSecretPW(secretPW); // 사용자가 입력한 비밀번호로 저장
         }
+        System.out.println("boardDto.secretValue : " + boardDto.getSecretValue());
+        System.out.println("boardDto.secretPW : " + boardDto.getSecretPW());
         int result = boardDao.updateBoard(boardDto);
+        System.out.println("boardCtrl edit result : " + result);
         if(result > 0) {
             return "redirect:/board/list";
         }
