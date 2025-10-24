@@ -199,8 +199,7 @@ public class MemberController {
     public String editProcess(@ModelAttribute MemberDto memberDto,
                               BindingResult bindingResult,
                               Model model,
-                              HttpSession session,
-                              @RequestParam String secretPW) {
+                              HttpSession session) {
 
         // 제목,내용,비밀번호 입력 안하거나 규격에 맞지 않을 경우 메세지 출력
 

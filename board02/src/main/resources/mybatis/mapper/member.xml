@@ -37,7 +37,7 @@
     </select>
 
 
-    <update id="updateMember" parameterType="MemberDto">
+    <update id="updateBoard" parameterType="MemberDto">
         UPDATE member SET
         userID=#{userID},
         userPW=#{userPW},
