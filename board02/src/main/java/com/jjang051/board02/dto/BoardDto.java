@@ -39,10 +39,6 @@ public class BoardDto {
 
     private String secretValue;  // 'Y' or 'N'
 
-    @NotBlank(message = "비밀글 비밀번호는 필수입력사항입니다")
-    @Size(min = 3,max = 16,message = "비밀글 비밀번호는 4글자 이상 16자 이하로 입력해주세요")
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+\\-={}\\[\\]:;\"'<>,.?/]).+$",
-            message = "비밀글 비밀번호는 대문자,소문자,특수문자,숫자를 모두 포함하여야 합니다.")
     private String secretPW;
 
     private String userID;
