@@ -137,15 +137,16 @@ public class BoardController {
         BoardDto prevBoardDto = boardDao.findPrev(id);
         BoardDto nextBoardDto = boardDao.findNext(id);
 
-        MemberDto loginUser = (MemberDto) session.getAttribute("loggedMember");
+//        MemberDto loginUser = (MemberDto) session.getAttribute("loggedMember");
 
         System.out.println("boardDto.getUserID : " + boardDto.getUserID());
+
         // 비밀글 접근 제한
         if ("Y".equals(boardDto.getSecretValue())) {
-            boolean isWriter = loginUser != null && loginUser.getUserID().equals(boardDto.getWriter());
             boolean pwCorrect = pw != null && pw.equals(boardDto.getSecretPW());
-
-            if (!isWriter && !pwCorrect) {
+            // html에 있는 pw의 값이 null이 아니거나 pw값이 현재 secret이 맞을 경우
+            System.out.println("pwCorrect : " + pwCorrect);
+            if (!pwCorrect) {
                 model.addAttribute("boardDto", boardDto);
                 model.addAttribute("error", "비밀번호를 입력해주세요.");
                 model.addAttribute("prevBoardDto", prevBoardDto);
