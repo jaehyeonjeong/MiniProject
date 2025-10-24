@@ -48,14 +48,14 @@
                     <form th:action="@{/member/info}" method="get">
                         <input type="hidden" name="page" th:value="${pageDto.page}">
                         <button class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 transition"
-                                type="submit" name="move" value="-10"
+                                type="submit" name="move" value="-1"
                                 th:disabled="${pageDto.page <= 1}">
                             이전
                         </button>
                         <span class="mx-2 text-sm text-gray-700"
                               th:text="'페이지 ' + ${pageDto.page} + ' / ' + ${totalPages}"></span>
                         <button class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 transition"
-                                type="submit" name="move" value="10"
+                                type="submit" name="move" value="1"
                                 th:disabled="${pageDto.page >= totalPages}">
                             다음
                         </button>

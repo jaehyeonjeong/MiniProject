@@ -139,6 +139,8 @@ public class MemberController {
 
         int offset = pageDto.getOffset();
 
+        System.out.println("offset==="+offset);
+
 
         map.put("userID", memberUserID);
         map.put("offset", String.valueOf(offset));
