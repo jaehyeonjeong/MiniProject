@@ -82,12 +82,28 @@
         <button class="btn btn-primary w-full">회원가입</button>
     </div>
 
+
+    <!-- 토스트 영역 (초기에는 숨김 처리) -->
+    <div id="toast-container" class="toast toast-end" style="display: none;">
+        <div id="toast-info" class="alert alert-error" style="display: none;">
+            <span>중복된 데이터 입니다!!.</span>
+        </div>
+        <div id="toast-success" class="alert alert-success" style="display: none;">
+            <span>중복되지 않은 데이터입니다~.</span>
+        </div>
+    </div>
+
 </form>
 
 <div th:replace="~{fragments/footer::footer-sns}"></div>
 <script>
     const btnIdCheck = document.querySelector("#btn-id-check");
     const userID = document.querySelector("#userID");
+
+    const toastContainer = document.querySelector("#toast-container");
+    const toastInfo = document.querySelector("#toast-info");
+    const toastSuccess = document.querySelector("#toast-success");
+
     btnIdCheck.addEventListener("click", async (e) => {
         const res = await fetch("/member/idCheck", {
             method: "post",
@@ -98,9 +114,23 @@
         })
         const data = await res.json();
         console.log(data);
+        // 토스트 초기화
+        
+        toastInfo.style.display = "none";
+        toastSuccess.style.display = "none";
+        toastContainer.style.display = "block";
+
         if (data.isDuplicate) {
-            alert("쓸 수 없는 아이디 입니다.");
+            toastInfo.style.display = "block";
+        } else {
+            toastSuccess.style.display = "block";
         }
+
+        // 3초 후 자동 숨김
+        setTimeout(() => {
+            toastContainer.style.display = "none";
+        }, 3000);
+
     })
     //로그인까지 만들어 보기...
 
