@@ -102,5 +102,22 @@
         }
     });
 </script>
+
+<!-- 삭제 자동 새로고침 -->
+<script>
+    function deleteBoard(boardId) {
+        fetch('/board/delete', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: boardId })
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data && data.success) {
+                    window.location.href = data.redirectUrl;
+                }
+            });
+    }
+</script>
 </body>
 </html>

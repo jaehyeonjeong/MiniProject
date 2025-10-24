@@ -17,6 +17,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import jakarta.servlet.http.HttpServletResponse;
+
 
 @Controller
 @RequestMapping("/board")
@@ -27,9 +29,13 @@ public class BoardController {
 
     @GetMapping("/list")
     public String list(Model model,
-                       @ModelAttribute("pageDto")  PageDto pageDto
-                       )
-    {
+                       @ModelAttribute("pageDto") PageDto pageDto,
+                       HttpServletResponse response) {
+
+        // 캐시/복원 방지
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        response.setHeader("Pragma", "no-cache");
+        response.setDateHeader("Expires", 0);
         int page =  pageDto.getPage();
         int size =  pageDto.getSize();
         int totalBoard =  boardDao.totalBoard(pageDto); //전체 게시물 수  33 /10
@@ -157,14 +163,18 @@ public class BoardController {
 
     @PostMapping("/delete")
     @ResponseBody
-    public Map<String, Boolean> delete(@RequestBody BoardDto boardDto) {
+    public Map<String, Object> delete(@RequestBody BoardDto boardDto) {
         int result = boardDao.deleteBoard(boardDto);
-        Map<String, Boolean> map = new HashMap<>();
 
-        if(result > 0) {
+        Map<String, Object> map = new HashMap<>();
+        System.out.println("board ctrl delete result : " + result);
+        if (result > 0) {
+            System.out.println("board ctrl delete result success");
             map.put("success", true);
+            map.put("redirectUrl", "redirect:/board/list" + System.currentTimeMillis());
         } else {
-            map.put("success", false);
+            System.out.println("board ctrl delete result fail");
+            map.put("fail", false);
         }
         return map;
     }
