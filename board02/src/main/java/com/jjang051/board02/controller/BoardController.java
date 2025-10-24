@@ -222,15 +222,10 @@ public class BoardController {
             boardDto.setWriter(loginUser.getUserName());
             boardDto.setTitle(boardDto.getTitle());
             boardDto.setContent(boardDto.getContent());
+            boardDto.setSecretValue(boardDto.getSecretValue());
+            boardDto.setSecretPW(secretPW);
         }
-        // 비밀글 체크박스가 null이면 'N'으로 처리
-        if (boardDto.getSecret() == null || boardDto.getSecret().isBlank()) {
-            boardDto.setSecret("N");
-        }
-        // 비밀글일 경우 비밀번호가 없으면 생성/저장
-        if ("Y".equals(boardDto.getSecretValue())) {
-            boardDto.setSecretPW(secretPW); // 사용자가 입력한 비밀번호로 저장
-        }
+
         System.out.println("boardDto.secretValue : " + boardDto.getSecretValue());
         System.out.println("boardDto.secretPW : " + boardDto.getSecretPW());
         int result = boardDao.updateBoard(boardDto);
